@@ -96,7 +96,7 @@ are pure and import nothing from the package.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    User Interaction                      │
+│                    User Interaction                     │
 ├──────────────────────┬──────────────────────────────────┤
 │       CLI Mode       │           GUI Mode               │
 │  (keyboard menus)    │  (tkinter dark theme)            │
@@ -112,7 +112,7 @@ are pure and import nothing from the package.
     │           Catalog Layer              │
     │  CATEGORIES:  16 dicts with files[]  │
     │  LEARNING_PATH:  7-stage ordering    │
-    │  EQUATIONS:  58 method → LaTeX[]     │
+    │  EQUATIONS:  58 methods → LaTeX[]    │
     └──────────────────────────────────────┘
            │                        │
            ▼                        ▼
@@ -212,6 +212,7 @@ from launcher_app.catalog import CATEGORIES, LEARNING_PATH
 |------------|------------------------------------------|----------|
 | Python 3.8+| Runtime                                  | Yes      |
 | NumPy      | Numerical method implementations         | Yes      |
-| matplotlib | LaTeX equation rendering in GUI          | Optional |
-| tkinter    | GUI (bundled with Python on most systems) | Optional |
+| matplotlib | Plotting + LaTeX equation rendering      | Yes      |
+| Pygments   | Syntax highlighting support              | Yes      |
+| tkinter    | GUI (bundled with Python on most systems)| Optional |
 | SciPy      | Some method implementations              | Optional |

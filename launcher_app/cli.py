@@ -26,7 +26,7 @@ def cli_header():
     print()
     print("╔════════════════════════════════════════════════════════════╗")
     print("║        NUMERICAL METHODS FOR PHYSICS — LAUNCHER          ║")
-    print("║        57 methods across 16 categories                   ║")
+    print("║        58 methods across 16 categories                   ║")
     print("╚════════════════════════════════════════════════════════════╝")
     print()
 
@@ -283,7 +283,6 @@ def cli_run_direct():
     if not path:
         return
 
-    import sys
     filepath = os.path.join(BASE_DIR, path)
     if os.path.exists(filepath):
         run_file(filepath)

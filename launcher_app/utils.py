@@ -7,11 +7,8 @@ Shared helpers used by both CLI and GUI launchers.
 import os
 import sys
 import subprocess
-import textwrap
-import io
-from contextlib import redirect_stdout, redirect_stderr
 
-from .config import BASE_DIR, SCRIPT_TIMEOUT
+from .config import SCRIPT_TIMEOUT
 
 
 def get_file_docstring(filepath):
@@ -186,19 +183,16 @@ def extract_key_function(filepath, func_name=""):
         # Find function/class definitions after docstring
         search_start = start_idx
         target_line = -1
-        target_type = ""
         
         for i in range(search_start, len(lines)):
             stripped = lines[i].strip()
-            if stripped.startswith("def ") and not stripped.startswith("def "):
+            if stripped.startswith("def "):
                 # Skip private functions
                 if not stripped[4:].startswith("_"):
                     target_line = i
-                    target_type = "def"
                     break
             elif stripped.startswith("class "):
                 target_line = i
-                target_type = "class"
                 break
         
         if target_line == -1:

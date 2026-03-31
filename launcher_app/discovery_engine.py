@@ -10,7 +10,6 @@ Provides:
 
 from .equations import METHOD_METADATA
 from .catalog import CATEGORIES
-import os
 
 
 # ════════════════════════════════════════════════════════════
@@ -104,7 +103,6 @@ def get_similar_methods(method_filename, limit=5):
     if basename not in METHOD_METADATA:
         return []
     
-    metadata = METHOD_METADATA[basename]
     target_category = None
     
     # Find category for this method

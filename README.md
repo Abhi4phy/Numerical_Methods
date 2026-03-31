@@ -179,14 +179,29 @@ If you're a computational physics scholar, here is the recommended order. Each s
 ```
 numpy
 matplotlib
-scipy (for comparison/validation only)
+pygments
+```
+
+Optional (not required for core launcher):
+
+```
+scipy (used by selected methods for comparison/validation)
 ```
 
 ## Usage
 
 Each file is standalone. Run any file directly:
 ```bash
-python Numerical_Methods/01_Linear_Algebra/lu_decomposition.py
+python 01_Linear_Algebra/lu_decomposition.py
+```
+
+Run the interactive launcher:
+
+```bash
+python launcher.py
+python launcher.py --cli
+python launcher.py --gui
+python -m launcher_app
 ```
 
 Every file includes:
