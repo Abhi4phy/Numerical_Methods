@@ -44,7 +44,7 @@ FONT_EQ  = ("Consolas", 13, "bold")
 # ────────────────────────────────────────────────────────
 # Runtime limits
 # ────────────────────────────────────────────────────────
-SCRIPT_TIMEOUT = 120        # seconds
+SCRIPT_TIMEOUT = 300        # seconds
 LATEX_DPI      = 110        # rendered equation resolution
 LATEX_FIG_W    = 8          # figure width (inches)
 LATEX_FIG_H    = 0.5        # figure height (inches)

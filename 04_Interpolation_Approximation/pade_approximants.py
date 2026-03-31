@@ -37,7 +37,9 @@ See how Padé captures the pole of 1/(1-x) beyond |x|<1.
 Prerequisite: least_squares_fitting.py, lagrange_interpolation.py
 """
 
+import math
 import numpy as np
+from scipy.integrate import quad
 
 
 def pade_approximant(coeffs, M, N):
@@ -288,7 +290,7 @@ if __name__ == "__main__":
 
     # --- 2. 1/(1-x): Beyond radius of convergence ---
     print("\n--- 1/(1-x): Padé extends beyond |x| < 1 ---")
-    c_geom = taylor_coefficients('1/(1-x)', 10)
+    c_geom = taylor_coefficients('1/(1-x)', 11)
     
     # [5/5] Padé for 1/(1-x) should give exact result!
     p55, q55 = pade_approximant(c_geom, 5, 5)
@@ -306,7 +308,7 @@ if __name__ == "__main__":
 
     # --- 3. Padé finds poles ---
     print("\n--- Pole detection in Padé ---")
-    c_geom = taylor_coefficients('1/(1-x)', 8)
+    c_geom = taylor_coefficients('1/(1-x)', 9)
     p44, q44 = pade_approximant(c_geom, 4, 4)
     zeros, poles = pade_poles_zeros(p44, q44)
     print(f"  [4/4] Padé of 1/(1-x):")
@@ -358,17 +360,15 @@ if __name__ == "__main__":
     # (Borel-summable)
     
     n_terms = 10
-    c_div = np.array([(-1)**k * np.math.factorial(k) for k in range(n_terms)], 
+    c_div = np.array([(-1)**k * math.factorial(k) for k in range(n_terms)],
                      dtype=float)
     
     x_eval = 0.5
-    # Exact (numerical integration)
-    from scipy.integrate import quad
     exact_int, _ = quad(lambda t: np.exp(-t)/(1+x_eval*t), 0, np.inf)
-    
+
     print(f"  f(x) ~ Σ (-1)^n n! x^n (divergent for x>0)")
     print(f"  Exact integral at x={x_eval}: {exact_int:.8f}")
-    
+
     # Padé resummation
     for M, N in [(2,2), (3,3), (4,4), (4,5)]:
         if M + N + 1 <= n_terms:
@@ -461,12 +461,12 @@ if __name__ == "__main__":
         # Divergent series resummation
         ax = axes[1, 2]
         x_range = np.linspace(0.01, 2.0, 100)
-        exact_vals = np.array([quad(lambda t: np.exp(-t)/(1+xi*t), 0, np.inf)[0] 
+        exact_vals = np.array([quad(lambda t: np.exp(-t)/(1+xi*t), 0, np.inf)[0]
                                for xi in x_range])
         ax.plot(x_range, exact_vals, 'k-', linewidth=2, label='Exact')
         for M, N in [(2,2), (3,3), (4,4)]:
             p_mn, q_mn = pade_approximant(c_div, M, N)
-            ax.plot(x_range, eval_pade(p_mn, q_mn, x_range), '--', 
+            ax.plot(x_range, eval_pade(p_mn, q_mn, x_range), '--',
                    label=f'Padé [{M}/{N}]')
         ax.set_xlabel('x')
         ax.set_ylabel('f(x)')

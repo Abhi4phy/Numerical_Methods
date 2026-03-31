@@ -305,6 +305,7 @@ if __name__ == "__main__":
 
     # --- 1. Small chain: compare with exact ---
     print("\n--- Small Chain: DMRG vs Exact Diagonalization ---")
+    small_chain_results = []
     for L in [4, 6, 8, 10, 12]:
         E_exact = exact_heisenberg_energy(L)
         
@@ -312,6 +313,7 @@ if __name__ == "__main__":
         energies, _ = infinite_dmrg(L, m_states=20, verbose=False)
         if energies:
             E_dmrg = energies[-1][1] * L
+            small_chain_results.append((L, E_exact, E_dmrg))
             print(f"  L={L:3d}: E_exact={E_exact:.8f}, E_DMRG={E_dmrg:.8f}, "
                   f"error={abs(E_dmrg - E_exact):.2e}")
 
@@ -322,16 +324,18 @@ if __name__ == "__main__":
     E_bethe = 0.25 - np.log(2)
     print(f"  Bethe ansatz (infinite chain): E/L = {E_bethe:.6f}")
     
+    bond_results = []
     for m in [4, 8, 16, 32]:
         energies, trunc = infinite_dmrg(L, m_states=m, verbose=False)
         if energies:
             e_per_site = energies[-1][1]
+            bond_results.append((m, e_per_site))
             print(f"  m={m:3d}: E/L = {e_per_site:.8f}, "
                   f"trunc_err = {trunc[-1]:.2e}")
 
     # --- 3. Larger chain ---
-    print("\n--- Larger Chain (L=40, m=20) ---")
-    energies_40, trunc_40 = infinite_dmrg(40, m_states=20, verbose=True)
+    print("\n--- Larger Chain (L=30, m=20) ---")
+    energies_40, trunc_40 = infinite_dmrg(30, m_states=20, verbose=True)
 
     # --- 4. Entanglement growth ---
     print("\n--- Entanglement Entropy ---")
@@ -368,11 +372,8 @@ if __name__ == "__main__":
         
         # Bond dimension convergence
         ax = axes[1, 0]
-        ms = [4, 8, 16, 32]
-        e_vs_m = []
-        for m in ms:
-            en, _ = infinite_dmrg(20, m_states=m, verbose=False)
-            e_vs_m.append(en[-1][1] if en else 0)
+        ms = [m for m, _ in bond_results]
+        e_vs_m = [e for _, e in bond_results]
         
         ax.semilogx(ms, e_vs_m, 'go-', markersize=8, linewidth=2)
         ax.axhline(E_bethe, color='r', linestyle='--', label='Bethe ansatz')
@@ -384,12 +385,9 @@ if __name__ == "__main__":
         
         # DMRG vs exact
         ax = axes[1, 1]
-        Ls_exact = [4, 6, 8, 10, 12, 14]
-        e_exact = [exact_heisenberg_energy(L)/L for L in Ls_exact]
-        e_dmrg_list = []
-        for L in Ls_exact:
-            en, _ = infinite_dmrg(L, m_states=20, verbose=False)
-            e_dmrg_list.append(en[-1][1] if en else 0)
+        Ls_exact = [L for L, _, _ in small_chain_results]
+        e_exact = [E_exact / L for L, E_exact, _ in small_chain_results]
+        e_dmrg_list = [E_dmrg / L for L, _, E_dmrg in small_chain_results]
         
         ax.semilogy(Ls_exact, np.abs(np.array(e_dmrg_list) - np.array(e_exact)), 
                     'ko-', markersize=8)
