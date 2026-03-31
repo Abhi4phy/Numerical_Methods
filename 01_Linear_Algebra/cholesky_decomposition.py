@@ -102,6 +102,10 @@ if __name__ == "__main__":
     print("CHOLESKY DECOMPOSITION DEMO")
     print("=" * 60)
 
+    # --- Example 1: Cholesky decomposition ---
+    # Factors a symmetric positive-definite matrix into LL^T form
+    # TO TEST: Change matrix size (4x4 to 6x6, 10x10), modify B to create different SPD matrices,
+    # or adjust diagonal scaling (0.1 to 1.0) to see numerical stability effects
     # Create a symmetric positive-definite matrix
     # A = B^T B guarantees SPD
     np.random.seed(42)
@@ -134,7 +138,25 @@ if __name__ == "__main__":
     print("NumPy solution:", np.round(x_np, 6))
     print("Difference:", np.linalg.norm(x - x_np))
 
-    # Test non-SPD matrix
+    # --- Example 2: Solve a system ---
+    # Uses Cholesky factorization to efficiently solve Ax = b systems
+    # TO TEST: Change b vector to different values (e.g., [1,1,1,1], [0,0,1,0], or random),
+    # modify matrix A by changing random seed or increasing diagonal scaling
+    # Try different system sizes by changing the matrix dimension
+    # Create a different system for testing
+    b2 = np.array([1, 1, 1, 1], dtype=float)
+    x2 = solve_cholesky(A, b2)
+
+    # --- Example 2 Output ---
+    print("\nExample 2 - Solving Ax = b2:")
+    print("b2 =", b2)
+    print("x2 =", np.round(x2, 6))
+    print("Residual ||Ax2-b2||:", np.linalg.norm(A @ x2 - b2))
+
+    # --- Example 3: Testing non-positive-definite matrix ---
+    # Demonstrates failure case when matrix lacks positive-definiteness
+    # TO TEST: Try different indefinite matrices like [[2, -3], [-3, 2]] or [[0, 1], [1, 0]],
+    # modify matrix C to make it positive-definite, or scale eigenvalues to see boundary cases
     print("\n--- Testing non-positive-definite matrix ---")
     C = np.array([[1, 2], [2, 1]])  # eigenvalues: 3 and -1
     print("Matrix C:", C)

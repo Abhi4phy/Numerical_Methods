@@ -143,10 +143,12 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Runge function: shows splines avoid Runge's phenomenon ---
+    # TO TEST: Try different numbers of nodes (n = 5, 15, 25) and compare with Lagrange
+    # Also test with uniform vs non-uniform node spacing
     print("\n--- Runge function: f(x) = 1/(1+25x²) ---")
     runge = lambda x: 1.0 / (1 + 25 * x**2)
     
-    n = 11
+    n = 11  # Try different values: 5, 15, 25
     x_nodes = np.linspace(-1, 1, n)
     y_nodes = runge(x_nodes)
     

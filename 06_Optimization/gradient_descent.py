@@ -168,6 +168,8 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Rosenbrock function (classic optimization test) ---
+    # TO TEST: Try different learning rates (alpha = 0.0001, 0.01) and momentum (beta = 0.8, 0.95)
+    # Compare convergence speeds of Fixed α vs Line Search vs Momentum
     print("\n--- Rosenbrock function: f(x,y) = (1-x)² + 100(y-x²)² ---")
     
     f_rosen = lambda x: (1 - x[0])**2 + 100 * (x[1] - x[0]**2)**2
@@ -196,6 +198,7 @@ if __name__ == "__main__":
           f"f = {f_rosen(x_mom):.2e}")
 
     # --- Simple quadratic (shows condition number effect) ---
+    # TO TEST: Change condition number from 100 to 10, 1000, or 10000 to see convergence differences
     print("\n--- Quadratic: f(x) = x₁² + 100·x₂² (κ=100) ---")
     grad_quad = lambda x: np.array([2*x[0], 200*x[1]])
     

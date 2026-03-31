@@ -180,14 +180,20 @@ if __name__ == "__main__":
     print("TRUNCATION & ROUND-OFF ERROR ANALYSIS")
     print("=" * 60)
 
+    # TO TEST: Compare float precision behavior by changing test magnitudes (a, b, c) and epsilon-scale checks.
+    # Observe loss of associativity and thresholds where arithmetic starts collapsing to identical values.
     # --- Floating-point properties ---
     print("\n--- IEEE 754 Double Precision ---")
     floating_point_properties()
 
+    # TO TEST: Adjust delta range in cancellation loop and quadratic coefficients (a,b,c) near ill-conditioned roots.
+    # Observe relative-error blowup and the stability gain from the alternative root formula.
     # --- Catastrophic cancellation ---
     print("\n--- Catastrophic Cancellation ---")
     demonstrate_catastrophic_cancellation()
 
+    # TO TEST: Swap f/fp pairs (e.g., exp, cos), change x0, and extend h sweep bounds to probe truncation vs round-off crossover.
+    # Observe U-shaped error curves and how optimal h shifts with formula order.
     # --- Differentiation error analysis ---
     print("\n--- Differentiation Error vs Step Size ---")
     f = np.sin
@@ -214,6 +220,8 @@ if __name__ == "__main__":
     print(f"  Central diff error:  {abs(d_cen - fp(x0)):.2e}")
     print(f"  Richardson error:    {abs(d_rich - fp(x0)):.2e}")
 
+    # TO TEST: Vary perturbation scale, matrix size n, and kappa range in condition_number_analysis.
+    # Observe approximate proportionality between solution sensitivity and condition number.
     # --- Condition number ---
     print("\n--- Condition Number Analysis ---")
     np.random.seed(42)

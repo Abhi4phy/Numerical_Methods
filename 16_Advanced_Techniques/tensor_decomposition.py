@@ -425,6 +425,8 @@ if __name__ == "__main__":
     
     rng = np.random.default_rng(42)
     
+    # TO TEST: Try different tensor shapes and unfold/fold across all modes.
+    # Observe fold-back error staying near numerical round-off.
     # --- 1. Mode-n unfolding ---
     print("\n--- Mode-n Unfolding ---")
     T = rng.standard_normal((3, 4, 5))
@@ -436,6 +438,8 @@ if __name__ == "__main__":
         print(f"  Mode-{n} unfolding: {T_n.shape}, "
               f"fold-back error: {err:.2e}")
     
+    # TO TEST: Vary target rank R_test, noise amplitude, and ALS iteration cap.
+    # Observe reconstruction error versus rank and convergence speed/stability.
     # --- 2. CP Decomposition ---
     print("\n--- CP Decomposition (ALS) ---")
     
@@ -456,6 +460,8 @@ if __name__ == "__main__":
         print(f"  Rank-{R_test}: final error = {errors[-1]:.6f} "
               f"({len(errors)} iterations)")
     
+    # TO TEST: Sweep Tucker ranks from full to aggressive compression.
+    # Observe error-compression tradeoff and when approximation quality drops sharply.
     # --- 3. Tucker / HOSVD ---
     print("\n--- Tucker Decomposition (HOSVD) ---")
     
@@ -472,6 +478,8 @@ if __name__ == "__main__":
               f"compression = {compression}/{original} "
               f"({compression/original*100:.1f}%)")
     
+    # TO TEST: Change max_rank and tensor dimensionality/shape.
+    # Observe TT-rank patterns, parameter count reduction, and reconstruction error.
     # --- 4. Tensor Train ---
     print("\n--- Tensor Train Decomposition ---")
     

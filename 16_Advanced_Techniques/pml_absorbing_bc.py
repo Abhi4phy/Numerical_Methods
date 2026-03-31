@@ -383,6 +383,8 @@ if __name__ == "__main__":
     print("PERFECTLY MATCHED LAYER (PML) DEMO")
     print("=" * 60)
 
+    # TO TEST: Change PML thickness L_pml, source frequency, and CFL-safe dt.
+    # Observe residual in-domain energy for reflecting/ABC/PML boundary choices.
     # --- 1. 1D comparison: PML vs reflecting ---
     print("\n--- 1D Wave: PML vs Reflecting Boundary ---")
     
@@ -423,6 +425,8 @@ if __name__ == "__main__":
     if e_ref > 0:
         print(f"  PML reduction: {e_pml/e_ref:.2e}× reflecting")
 
+    # TO TEST: Sweep L_pml_test and compare corresponding sigma_max from optimal_sigma_max.
+    # Observe how thicker/stronger damping layers reduce late-time reflection energy.
     # --- 2. PML parameter study ---
     print("\n--- PML Parameter Study ---")
     
@@ -435,6 +439,8 @@ if __name__ == "__main__":
         sm = optimal_sigma_max(c, L_pml_test)
         print(f"  {L_pml_test:6.2f} {sm:10.2f} {e:16.2e}")
 
+    # TO TEST: Vary damping polynomial order p and optionally n_steps for long-time behavior.
+    # Observe which profile order minimizes residual energy for fixed layer thickness.
     # --- 3. Polynomial order study ---
     print("\n--- Damping Profile Order Study ---")
     print(f"  {'Order p':>8s} {'Residual Energy':>16s}")

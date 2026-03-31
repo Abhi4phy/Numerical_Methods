@@ -262,6 +262,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Problem 1: Simple Poisson ---
+    # TO TEST: Change N (use 2^k+1 values) and smoothing sweeps nu1/nu2, then observe V-cycle count and max error versus exact sin(pi*x).
     print("\n--- Problem 1: -u'' = sin(πx), u(0)=u(1)=0 ---")
     
     N = 129  # 2^7 + 1
@@ -274,6 +275,7 @@ if __name__ == "__main__":
     print(f"V-cycles needed: {len(residuals)}")
 
     # --- Comparison with Gauss-Seidel alone ---
+    # TO TEST: Increase/decrease GS sweeps and compare residual trajectories to multigrid to observe low-frequency error reduction advantage.
     print("\n--- Comparison: Multigrid vs Gauss-Seidel ---")
     h = 1.0 / (N - 1)
     f = np.array([f_func(xi) for xi in x])
@@ -295,6 +297,7 @@ if __name__ == "__main__":
     print(f"MG total GS sweeps (est): ~{total_gs_sweeps_in_mg}")
 
     # --- Problem 2: Variable coefficient ---
+    # TO TEST: Replace source with higher/lower frequency modes (for example sin(5*pi*x)), and observe impact on convergence cycles and error.
     print("\n--- Problem 2: Higher frequency source ---")
     f_func2 = lambda x: np.pi**2 * 9 * np.sin(3*np.pi*x)  # u = sin(3πx)
     

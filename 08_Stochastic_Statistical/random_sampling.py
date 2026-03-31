@@ -256,6 +256,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- LCG test ---
+    # TO TEST: Try different seeds and sample sizes (10000, 100000, 1000000)
     print("\n--- LCG: Linear Congruential Generator ---")
     lcg = LCG(seed=12345)
     lcg_samples = lcg.sample(10000)
@@ -263,6 +264,7 @@ if __name__ == "__main__":
     print(f"     std  = {np.std(lcg_samples):.4f} (expect {1/np.sqrt(12):.4f})")
 
     # --- Box-Muller ---
+    # TO TEST: Compare with different normality tests or sample from different distributions
     print("\n--- Box-Muller Transform ---")
     bm_samples = box_muller(100000)
     print(f"Box-Muller: mean = {np.mean(bm_samples):.4f} (expect 0)")
@@ -275,6 +277,7 @@ if __name__ == "__main__":
     print(f"Mean: {np.mean(exp_samples):.4f} (expect {1/2.0})")
     print(f"Std:  {np.std(exp_samples):.4f} (expect {1/2.0})")
 
+    # TO TEST: Try different distributions (Beta(1,1), Beta(5,2)) or proposal envelopes M
     # --- Rejection Sampling ---
     print("\n--- Rejection Sampling: Beta(2,5) ---")
     from scipy.stats import beta as beta_dist

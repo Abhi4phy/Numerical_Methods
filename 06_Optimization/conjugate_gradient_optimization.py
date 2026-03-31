@@ -248,6 +248,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Rosenbrock ---
+    # TO TEST: Change x0 and compare method='FR'/'PR'/'HS' plus BFGS and L-BFGS iterations; observe convergence speed and final f value.
     f_rosen = lambda x: (1 - x[0])**2 + 100 * (x[1] - x[0]**2)**2
     grad_rosen = lambda x: np.array([
         -2*(1 - x[0]) - 400*x[0]*(x[1] - x[0]**2),
@@ -275,6 +276,7 @@ if __name__ == "__main__":
           f"f = {f_rosen(x_lb):.2e}, iters = {len(h_lb)}")
 
     # --- Higher-dimensional test ---
+    # TO TEST: Vary dimension n and condition number range (eigvals upper bound), then observe ||x-x*|| and iteration counts across CG/BFGS/L-BFGS.
     print("\n--- High-dimensional quadratic (n=50, κ=1000) ---")
     n = 50
     np.random.seed(42)

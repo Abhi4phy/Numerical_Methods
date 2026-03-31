@@ -205,6 +205,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Example 1: Sample from a bimodal distribution ---
+    # TO TEST: Vary proposal_std, x0, and burn_in; observe acceptance rate, mode-hopping frequency, and histogram agreement with true density.
     print("\n--- Example 1: Bimodal Gaussian mixture ---")
     
     def log_bimodal(x):
@@ -222,6 +223,7 @@ if __name__ == "__main__":
     print(f"Sample std:  {np.std(samples):.3f}")
 
     # --- Example 2: 2D Ising model ---
+    # TO TEST: Change lattice size L and temperatures around Tc (about 2.269), and observe shifts in average magnetization and energy.
     print("\n--- Example 2: 2D Ising Model ---")
     L = 20
     
@@ -244,6 +246,7 @@ if __name__ == "__main__":
           f"<E> = {np.mean(eng_c):.3f}")
 
     # --- Example 3: Simulated annealing ---
+    # TO TEST: Change T_init, alpha, step_size, or dimension, and observe final best value quality versus convergence speed.
     print("\n--- Example 3: Simulated Annealing on Rastrigin ---")
     
     def rastrigin(x):

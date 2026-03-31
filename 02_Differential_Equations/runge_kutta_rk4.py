@@ -91,6 +91,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Convergence study with known solution ---
+    # TO TEST: Verify convergence rates for Euler (order 1), RK2 (order 2), RK4 (order 4).
+    # Parameters: f(t,y)=-y (exponential decay), h=[0.5, 0.2, 0.1, 0.05, 0.01], time horizon [0,5].
+    # Initial values: y(0)=1 (exact solution y(t)=exp(-t)).
+    # Observe: Error ratios on subsequent halvings: Euler ~2x, RK2 ~4x, RK4 ~16x (2^order).
+    # Try: Change f to -2y or use time horizon [0,10] to see convergence order more clearly.
     print("\n--- Convergence study: dy/dt = -y, y(0) = 1 ---")
     f = lambda t, y: -y
     y_exact = lambda t: np.exp(-t)
@@ -110,6 +115,11 @@ if __name__ == "__main__":
         print(f"{h:10.3f} | {e1:12.6e} | {e2:12.6e} | {e4:12.6e}")
 
     # --- Kepler orbit (2-body problem) ---
+    # TO TEST: Vary eccentricity e, number of orbits (5*T can be 10*T), or step size h.
+    # Parameters: e (0.6=ellipse, 0=circle, 0.9=very eccentric), h (step size), integration time (5*T).
+    # Initial values: y0_kepler from elliptical orbit formulas (perihelion + circular velocity).
+    # Observe: Energy should stay nearly constant over 5 orbits. Watch for drift growing in time.
+    # Try: increase h (0.02, 0.05) to see energy drift worsen; or h=0.001 to see improved accuracy.
     print("\n--- Kepler Orbit (e=0.6 elliptical orbit) ---")
     # Equations: d²r/dt² = -r/|r|³ (gravitational units)
     # State: y = [x, y, vx, vy]

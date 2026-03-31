@@ -234,7 +234,10 @@ if __name__ == "__main__":
 
     np.random.seed(42)
 
-    # --- Basic SVD ---
+    # --- Example 1: Basic SVD ---
+    # Demonstrates SVD decomposition showing singular values and reconstruction
+    # TO TEST: Try different matrix sizes (m,n) like (10,5), (20,10) or add more noise
+    # Try comparing error with different k values: rank-1, rank-2, or full rank
     print("\n--- Basic SVD ---")
     A = np.array([[1, 2, 3],
                   [4, 5, 6],
@@ -252,7 +255,10 @@ if __name__ == "__main__":
     U_np, S_np, Vt_np = np.linalg.svd(A, full_matrices=False)
     print(f"NumPy singular values: {S_np}")
 
-    # --- Pseudoinverse ---
+    # --- Example 2: Pseudoinverse ---
+    # Uses SVD to compute Moore-Penrose pseudoinverse for solving least-squares problems
+    # TO TEST: Change the RHS vector b to different noise patterns or use random b
+    # Try solving with fewer equations (remove some rows) or more equations (add rows)
     print("\n--- Pseudoinverse: Least-squares via SVD ---")
     # Overdetermined system: 4 equations, 2 unknowns
     A_ls = np.array([[1, 1], [1, 2], [1, 3], [1, 4]], dtype=float)
@@ -263,7 +269,11 @@ if __name__ == "__main__":
     print(f"Least-squares solution: {x_ls}")
     print(f"Residual: {np.linalg.norm(A_ls @ x_ls - b):.4f}")
 
-    # --- Truncated SVD (image compression analogy) ---
+    # --- Example 3: Truncated SVD ---
+    # Shows low-rank approximation and compression ratio for a structured matrix
+    # TO TEST: Change true_rank (5 to 3 or 10), increase/decrease noise (0.01 to 0.1),
+    # or modify matrix size (m, n) to see how compression ratio scales
+    # Compare energy captured at different k values
     print("\n--- Truncated SVD: Low-rank approximation ---")
     m, n = 100, 80
     # Create a matrix with known rank structure
@@ -277,7 +287,11 @@ if __name__ == "__main__":
         print(f"  Rank-{k:2d}: error={err:.4f}, energy={energy:.4f}, "
               f"compression={ratio:.3f}")
 
-    # --- Randomized SVD ---
+    # --- Example 4: Randomized SVD ---
+    # Demonstrates efficient SVD on large matrices using randomization
+    # TO TEST: Increase matrix size (m, n) to 5000x2000, adjust power iteration (n_iter: 1,3,5),
+    # or change k value (10 to 20 or 30) to see accuracy vs speed tradeoff
+    # Compare timing differences between randomized and full SVD
     print("\n--- Randomized SVD (large matrix) ---")
     m, n = 1000, 500
     A_big = np.random.randn(m, 10) @ np.random.randn(10, n)
@@ -294,7 +308,11 @@ if __name__ == "__main__":
     print(f"Randomized SVD:  {t_rand*1000:.1f} ms, top sing vals = {S_r[:5].round(2)}")
     print(f"Full SVD:        {t_full*1000:.1f} ms, top sing vals = {S_f[:5].round(2)}")
 
-    # --- PCA ---
+    # --- Example 5: PCA ---
+    # Principal Component Analysis using SVD on centered data
+    # TO TEST: Change n_samples (500 to 100, 1000), modify data_3d coefficients (2*t_param),
+    # adjust noise level (0.5 to 0.1 or 1.0), or try n_components 2 vs 3
+    # Observe how explained variance ratio changes with different data sparsity
     print("\n--- PCA on synthetic data ---")
     n_samples = 500
     # 3D data that lies mostly on a 2D plane

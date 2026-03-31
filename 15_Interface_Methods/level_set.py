@@ -353,6 +353,8 @@ if __name__ == "__main__":
     print("LEVEL SET METHODS DEMO")
     print("=" * 60)
 
+    # TO TEST: Vary velocity field (vx, vy), CFL-like dt, and step count n_steps.
+    # Observe interface translation accuracy and enclosed-area conservation drift.
     # --- 1. Circle advection ---
     print("\n--- Circle Advection ---")
     N = 100
@@ -382,6 +384,8 @@ if __name__ == "__main__":
     print(f"  Area after:  {area1:.4f}")
     print(f"  Area change: {abs(area1-area0)/area0*100:.2f}%")
 
+    # TO TEST: Change bump amplitude/frequency in r_bumpy plus dt_curv and evolution length.
+    # Observe perimeter reduction, smoothing rate, and area shrinkage under curvature flow.
     # --- 2. Motion by curvature ---
     print("\n--- Motion by Curvature ---")
     

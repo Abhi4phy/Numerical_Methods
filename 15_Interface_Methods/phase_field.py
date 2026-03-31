@@ -332,6 +332,8 @@ if __name__ == "__main__":
     print("PHASE-FIELD METHODS DEMO")
     print("=" * 60)
 
+    # TO TEST: Vary epsilon, dt, and n_steps from the same initial phase pattern.
+    # Observe interface width scaling and monotonic free-energy decay.
     # --- 1. Allen-Cahn: tanh profile formation ---
     print("\n--- Allen-Cahn: Interface Formation ---")
     N = 128
@@ -354,6 +356,8 @@ if __name__ == "__main__":
     print(f"  Interface width: {interface_width(phi_ac, dx):.4f} "
           f"(expected ≈ {2*np.sqrt(2)*epsilon:.4f})")
 
+    # TO TEST: Change mean/amplitude of random initial condition and epsilon_ch.
+    # Observe domain coarsening, conserved mean field, and dominant structure-factor peak shift.
     # --- 2. Cahn-Hilliard: spinodal decomposition ---
     print("\n--- Cahn-Hilliard: Spinodal Decomposition ---")
     N_ch = 128
@@ -376,6 +380,8 @@ if __name__ == "__main__":
     print(f"  Dominant wavelength: L* ≈ {N_ch/k_peak:.1f} grid cells" 
           if k_peak > 0 else "  No dominant wavelength")
 
+    # TO TEST: Sweep off-critical mean values (e.g., 0.1, 0.3, 0.5) and amplitude.
+    # Observe transition from bicontinuous morphologies to droplet-dominated minority phases.
     # --- 3. Off-critical quench ---
     print("\n--- Off-Critical Quench (φ̄ = 0.3) ---")
     phi0_off = random_initial(N_ch, N_ch, mean=0.3, amplitude=0.05)

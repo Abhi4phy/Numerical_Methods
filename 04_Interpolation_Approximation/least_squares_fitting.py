@@ -160,6 +160,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Polynomial fitting ---
+    # TO TEST: Change noise level, sample count, and polynomial degree list; observe underfitting/overfitting behavior and how R² responds to model complexity.
     print("\n--- Polynomial Fit ---")
     x = np.linspace(0, 5, 30)
     y_true = 1.0 + 2.0*x - 0.5*x**2
@@ -172,6 +173,7 @@ if __name__ == "__main__":
         print(f"  Degree {deg}: coeffs = {np.round(coeffs, 4)}, R² = {stats['R2']:.6f}")
 
     # --- Custom basis functions ---
+    # TO TEST: Swap or add basis functions (e.g., x, x^2, exp terms) and adjust synthetic signal coefficients; observe coefficient recovery quality and residual trends.
     print("\n--- Custom Basis: f(x) = a·sin(x) + b·cos(x) + c ---")
     x2 = np.linspace(0, 2*np.pi, 50)
     y2 = 3*np.sin(x2) + 2*np.cos(x2) + 1 + np.random.randn(50)*0.3
@@ -182,6 +184,7 @@ if __name__ == "__main__":
     print(f"  True:   3.000·sin(x) + 2.000·cos(x) + 1.000")
 
     # --- Nonlinear fit: exponential decay ---
+    # TO TEST: Vary initial guess p0, decay rate in generated data, and noise amplitude; observe Gauss-Newton convergence speed, stability, and fitted parameter sensitivity.
     print("\n--- Nonlinear Fit: y = a·exp(-b·x) + c ---")
     x3 = np.linspace(0, 5, 40)
     y3 = 5.0 * np.exp(-0.8 * x3) + 1.0 + np.random.randn(40) * 0.2

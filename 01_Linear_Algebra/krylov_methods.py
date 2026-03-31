@@ -277,7 +277,12 @@ if __name__ == "__main__":
 
     np.random.seed(42)
 
-    # --- Non-symmetric system ---
+    # --- Example 1: Non-symmetric system with GMRES vs BiCGSTAB ---
+    # Compares two iterative solvers on non-symmetric random system
+    # TO TEST: Change system size n (100 to 50, 200, 500),
+    # modify matrix structure (shift amount, full random, specific eigenvalues),
+    # adjust tolerance levels, or test with different condition numbers
+    # Try rectangular systems or matrices with special structure
     print("\n--- Non-symmetric system (n=100) ---")
     n = 100
     A = np.random.randn(n, n) + 5 * np.eye(n)  # Shifted for stability
@@ -292,7 +297,11 @@ if __name__ == "__main__":
     print(f"BiCGSTAB: ||x - x_true|| = {np.linalg.norm(x_bicgs - x_true):.2e}, "
           f"iters = {len(res_bicgs)}")
 
-    # --- Matrix-free operation ---
+    # --- Example 2: Matrix-free operation ---
+    # Shows solving via only matrix-vector products (no explicit matrix stored)
+    # TO TEST: Change domain size n (200 to 100, 500), modify diffusion D and advection a,
+    # try different convection patterns, adjust RHS (b_cd), use different operators
+    # (e.g., reaction-diffusion, anisotropic), or test with variable coefficients
     print("\n--- Matrix-free: convection-diffusion operator ---")
     n = 200
     h = 1.0 / (n + 1)
@@ -320,7 +329,12 @@ if __name__ == "__main__":
     print(f"Conv-Diff: converged in {len(res_cd)} iterations")
     print(f"Final residual: {res_cd[-1]:.2e}")
 
-    # --- Preconditioning effect ---
+    # --- Example 3: Preconditioning impact ---
+    # Demonstrates significant speedup from simple Jacobi preconditioning
+    # TO TEST: Try different preconditioners (SSOR, ILU), change system size,
+    # modify the ill-conditioning (change 0.01 to 0.001, 0.1),
+    # use restart parameter variations, test with different RHS vectors,
+    # or compare restart values (10, 30, 50) impact on convergence
     print("\n--- Preconditioning comparison ---")
     n = 50
     # Ill-conditioned system

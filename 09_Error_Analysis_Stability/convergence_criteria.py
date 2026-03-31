@@ -234,6 +234,8 @@ if __name__ == "__main__":
     print("CONVERGENCE CRITERIA & ORDER OF ACCURACY")
     print("=" * 60)
 
+    # TO TEST: Change t_span, initial value y0, or the ODE RHS (f_ode) and verify observed order trends (Euler~1, RK2~2, RK4~4).
+    # Observe how dt refinement changes terminal error and the estimated order column.
     # --- ODE Solver Convergence ---
     print("\n--- ODE Convergence: y' = -y, y(0) = 1, exact = e^{-t} ---")
     
@@ -253,6 +255,8 @@ if __name__ == "__main__":
             order_str = f"{orders[i-1]:.2f}" if i > 0 else "  —"
             print(f"  {dt:12.6f} {err:12.2e} {order_str:>8s}")
 
+    # TO TEST: Vary Ns, norm in grid_refinement_study (max/L2/L1), or source/BC setup in poisson_solver.
+    # Observe whether halving h yields the expected ~4x error reduction for this 2nd-order stencil.
     # --- PDE Grid Refinement ---
     print("\n--- PDE Grid Refinement: -u'' = π²sin(πx) ---")
     

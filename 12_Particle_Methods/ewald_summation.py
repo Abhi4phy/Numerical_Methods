@@ -295,6 +295,8 @@ if __name__ == "__main__":
     print("EWALD SUMMATION DEMO")
     print("=" * 60)
 
+    # TO TEST: Change reciprocal cutoff kmax and compare against known Madelung constant.
+    # Observe convergence rate and diminishing absolute error with larger k-space truncation.
     # --- 1. Madelung Constant of NaCl ---
     print("\n--- Madelung Constant of NaCl ---")
     M_exact = 1.7475645946  # Known value
@@ -312,6 +314,8 @@ if __name__ == "__main__":
         print(f"    shells={n:3d}: M = {M_direct:.6f}, "
               f"error = {abs(M_direct - M_exact):.4e}")
 
+    # TO TEST: Sweep alpha while holding cutoffs fixed to study real/reciprocal workload balance.
+    # Observe stability of total Madelung value versus component redistribution.
     # --- 2. Ewald parameter sensitivity ---
     print("\n--- Ewald Parameter α Sensitivity ---")
     a = 1.0
@@ -319,6 +323,8 @@ if __name__ == "__main__":
         M, E = madelung_constant_nacl(L_max=7, alpha=alpha)
         print(f"  α = {alpha:5.1f}: M = {M:.8f}")
 
+    # TO TEST: Vary alpha, rcut, and kmax jointly to inspect E_real/E_recip/E_self cancellation.
+    # Observe whether E_total remains consistent as decomposition terms individually shift.
     # --- 3. Energy components ---
     print("\n--- Energy Decomposition ---")
     pos = np.array([
@@ -335,6 +341,8 @@ if __name__ == "__main__":
     print(f"  E_self     = {E_self:12.6f}")
     print(f"  E_total    = {E_total:12.6f}")
 
+    # TO TEST: Modify kmax and alpha in ewald_1d for alternating-charge chain.
+    # Observe convergence toward the analytic ln(2) reference.
     # --- 4. 1D Chain ---
     print("\n--- 1D Alternating Chain ---")
     # +-+-+-+- chain, Madelung constant = ln(2)
@@ -351,6 +359,8 @@ if __name__ == "__main__":
     print(f"  1D Madelung: computed = {M_1d:.8f}, exact = {M_1d_exact:.8f}")
     print(f"  Error: {abs(M_1d - M_1d_exact):.2e}")
 
+    # TO TEST: Change random seed, particle count N_rand, and neutrality enforcement.
+    # Observe energy sensitivity and verify near-zero net charge before interpreting totals.
     # --- 5. Random charges (charge-neutral) ---
     print("\n--- Random Charge-Neutral System ---")
     N_rand = 20

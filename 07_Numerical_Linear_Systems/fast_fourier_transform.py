@@ -174,6 +174,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Test 1: Verify FFT = DFT ---
+    # TO TEST: Change N (power of 2) and random seed, and observe norm differences between DFT, custom FFT, and numpy FFT stay near machine precision.
     print("\n--- Test 1: Verify FFT matches DFT ---")
     np.random.seed(42)
     N = 64
@@ -189,6 +190,7 @@ if __name__ == "__main__":
     print(f"||FFT_rec  - numpy|| = {np.linalg.norm(X_fft_rec - X_numpy):.2e}")
 
     # --- Test 2: Signal analysis ---
+    # TO TEST: Modify sinusoid frequencies/amplitudes/noise level, then observe whether PSD peak frequencies recover the injected components.
     print("\n--- Test 2: Spectral analysis of a signal ---")
     dt = 0.001  # 1 ms sampling
     t = np.arange(0, 1.0, dt)  # 1 second
@@ -207,6 +209,7 @@ if __name__ == "__main__":
     print(f"Expected: 50 Hz and 120 Hz")
 
     # --- Test 3: FFT convolution ---
+    # TO TEST: Use longer vectors a and b (including negative values), and observe allclose agreement between FFT convolution and np.convolve.
     print("\n--- Test 3: FFT convolution ---")
     a = np.array([1, 2, 3, 4])
     b = np.array([1, 1, 1])

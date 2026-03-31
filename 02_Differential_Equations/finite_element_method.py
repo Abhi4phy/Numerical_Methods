@@ -120,6 +120,11 @@ if __name__ == "__main__":
     # --- Problem 1: Simple Poisson ---
     # -u'' = π²sin(πx), u(0)=0, u(1)=0
     # Exact: u(x) = sin(πx)
+    # TO TEST: Vary number of elements (5, 10, 20, 50, 100), or change source f to x or exp(x).
+    # Parameters: p(x)=1 (diffusion), q(x)=0 (reaction), f(x)=π²sin(πx) (source), domain [0,1].
+    # Initial values: n_el=[5,10,20,50] in convergence study (should show O(h²) rate).
+    # Observe: Error decreases quadratically with n_elements. Watch output for convergence rate.
+    # Try: change f to lambda x: 1.0 (constant source) and manually verify analytical solution.
     print("\n--- Problem 1: -u'' = π²sin(πx) ---")
     p = lambda x: 1.0
     q = lambda x: 0.0
@@ -133,6 +138,11 @@ if __name__ == "__main__":
 
     # --- Problem 2: Variable coefficient ---
     # -d/dx[(1+x) du/dx] = 1, u(0)=0, u(1)=0
+    # TO TEST: Modify p(x) to different functions (x, sin(x), exp(x)), change source f, or add boundary values.
+    # Parameters: p(x)=1+x (increasing diffusion), q(x)=0, f(x)=1 (constant RHS), n_elements=50.
+    # Initial values: p(x) varies from 1 to 2 over [0,1] → solution is asymmetric.
+    # Observe: Solution at midpoint u(0.5). FEM handles variable coefficients systematically.
+    # Try: p(x)=exp(x) for exponentially varying diffusion, or add q(x)=x for reaction term.
     print("\n--- Problem 2: -d/dx[(1+x) du/dx] = 1 ---")
     p2 = lambda x: 1.0 + x
     q2 = lambda x: 0.0
@@ -143,6 +153,11 @@ if __name__ == "__main__":
 
     # --- Problem 3: Reaction-diffusion ---
     # -u'' + u = x, u(0)=0, u(1)=0
+    # TO TEST: Modify reaction coefficient q(x) (0.1, 1.0, 10.0), change f to sin(x) or exp(x), vary n_elements.
+    # Parameters: p(x)=1 (diffusion), q(x)=1 (reaction), f(x)=x (linear source), n_elements=50.
+    # Initial values: q=1 is moderate reaction. Larger q → solution becomes smoother and smaller in magnitude.
+    # Observe: Solution behavior. With q=0 → standard Poisson. With large q → reaction dominates.
+    # Try: q=10, see how u(0.5) changes (should decrease). Or f=sin(x) for oscillatory forcing.
     print("\n--- Problem 3: -u'' + u = x (reaction-diffusion) ---")
     p3 = lambda x: 1.0
     q3 = lambda x: 1.0

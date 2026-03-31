@@ -96,6 +96,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Test function: ∫₀^π sin(x) dx = 2 ---
+    # TO TEST: Verify convergence rate O(h²). Try n=[2,4,8,16,32,64,128] and watch error ratios.
+    # Parameters: integrand f=sin(x), domain [0,π], exact value=2, n (number of intervals).
+    # Initial values: n=[2,4,8,...,128] (each n=4*previous n).
+    # Observe: Error ratio consecutive runs should be ~4 (quadratic convergence). Ratio = errors[i-1]/errors[i].
+    # Try: f=exp(x), f=cos(x), or f=1/(1+x²) on different domains to verify O(h²) holds generally.
     print("\n--- ∫₀^π sin(x) dx = 2 ---")
     exact = 2.0
     print(f"{'n':>6s} | {'Trapezoidal':>14s} | {'Error':>12s} | {'Ratio':>8s}")
@@ -110,6 +115,11 @@ if __name__ == "__main__":
         prev_error = error
 
     # --- Romberg integration ---
+    # TO TEST: Compare final result accuracy vs explicit computation. Try max_order=[4, 6, 8, 10].
+    # Parameters: f=sin(x), domain [0,π], exact=2, max_order=default, tol=1e-12.
+    # Initial values: Uses trapezoidal rule internally with Richardson extrapolation.
+    # Observe: Diagonal of Romberg table shows rapid convergence (better than pure trapezoidal).
+    # Insight: Romberg achieves high order (4,6,8th) combining multiple resolutions. Check the table!
     print("\n--- Romberg Integration ---")
     result, table = romberg_integration(np.sin, 0, np.pi)
     print(f"Result: {result:.15f}")
@@ -122,6 +132,11 @@ if __name__ == "__main__":
         print(f"  {row}")
 
     # --- Periodic function: exponential accuracy ---
+    # TO TEST: Compare periodic vs non-periodic convergence. Try periodic functions vs polynomial.
+    # Parameters: f=exp(sin(x)) (2π-periodic and smooth), domain [0,2π], n=[4,8,16,32].
+    # Initial values: Periodic functions enjoy exponential convergence (superconvergence!).
+    # Observe: Error diminishes much faster than polynomial functions. n=32 gives tiny error!
+    # Try: f=1/(2-cos(x)) or f=exp(-sin²(x)), both periodic. Compare errors to nonperiodic f=1/(1+x²).
     print("\n--- Periodic: ∫₀^{2π} exp(sin(x)) dx ---")
     from scipy import integrate as sp_integrate
     exact_periodic = sp_integrate.quad(lambda x: np.exp(np.sin(x)), 0, 2*np.pi)[0]

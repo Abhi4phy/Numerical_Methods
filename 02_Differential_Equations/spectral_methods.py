@@ -131,6 +131,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Fourier spectral: periodic Poisson ---
+    # TO TEST: Modify domain length L, number of modes N, and the source term f(x).
+    # Parameters: L=2π (domain period), N=64 (modes), source f(x)=sin(x)+4sin(2x).
+    # Initial values: Try L=2, add N=128 for finer resolution, modify forcing terms.
+    # Observe: Max error should be ~1e-12 or better (spectral accuracy!).
+    # Insight: Fourier is best for smooth periodic functions. Try f(x)=exp(sin(x)) for smoothness test.
     print("\n--- Fourier Spectral: -u'' = f(x), periodic ---")
     L = 2 * np.pi
     N = 64
@@ -147,6 +152,11 @@ if __name__ == "__main__":
     print(f"  Max error (N={N}): {error:.2e}")
 
     # Spectral derivative
+    # TO TEST: Try different orders (order=2,3,4) and different functions.
+    # Parameters: order (1,2,3,...), function g(x), domain L.
+    # Initial values: g=sin(3x), order=1. Try g=exp(sin(x)), order=2.
+    # Observe: Error magnitude (should be very small for smooth functions).
+    # Insight: Even order=4 derivatives are accurate due to FFT spectral accuracy.
     print("\n--- Spectral Derivative ---")
     g = np.sin(3 * x)
     g_prime_exact = 3 * np.cos(3 * x)
@@ -154,6 +164,11 @@ if __name__ == "__main__":
     print(f"  d/dx[sin(3x)] error: {np.max(np.abs(g_prime - g_prime_exact)):.2e}")
 
     # --- Chebyshev: non-periodic BVP ---
+    # TO TEST: Vary grid resolution N, change boundary values bc_left/bc_right, or modify forcing f_cheb.
+    # Parameters: N (Chebyshev nodes), f_cheb (RHS function), bc_left=0, bc_right=0 (Dirichlet BCs).
+    # Initial values: N=[8,16,32,64], f=-π²sin(πx), exact=sin(πx).
+    # Observe: Max error decreases exponentially (spectral convergence) with N.
+    # Try: Change exact solution (u=exp(-x), u=x⁴) or add non-homogeneous BCs.
     print("\n--- Chebyshev Collocation: -u'' = π²sin(πx) ---")
     f_cheb = lambda x: np.pi**2 * np.sin(np.pi * x)
     u_cheb_exact = lambda x: np.sin(np.pi * x)

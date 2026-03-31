@@ -85,6 +85,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Example 1: Simple root ---
+    # TO TEST: Change bracket [1, 2] to [0, 2] or [1, 3], and observe that convergence is guaranteed only when f(a)*f(b) < 0.
+    # IMPORTANT: Bisection requires f(a) and f(b) to have OPPOSITE signs
+    # Try: f(1) = 1 - 1 - 2 = -2 (negative), f(2) = 8 - 2 - 2 = 4 (positive) ✓
+    # To experiment: Try changing [1, 2] to other intervals like [0, 2] or [1, 3]
+    # as long as they bracket a root (opposite signs at endpoints)
     print("\n--- f(x) = x³ - x - 2, root near x ≈ 1.5214 ---")
     f = lambda x: x**3 - x - 2
     
@@ -95,6 +100,11 @@ if __name__ == "__main__":
     print(f"Predicted iterations: {bisection_count(1, 2, 1e-12)}")
 
     # --- Example 2: Transcendental equation ---
+    # TO TEST: Replace [0, pi/2] with [0, 1] or [1, 3], and observe success/failure based on endpoint sign change.
+    # IMPORTANT: The interval [0, π/2] is REQUIRED (not [1, 2]!)
+    # Check: f(0) = cos(0) - 0 = 1 (positive), f(π/2) ≈ -1.57 (negative) ✓
+    # Common mistake: [1, 2] gives f(1) ≈ -0.46 (negative), f(2) ≈ -2.42 (negative) ✗
+    # To experiment: Try [0, 1] or [1, 3] and check the signs first!
     print("\n--- f(x) = cos(x) - x (fixed point of cos) ---")
     f2 = lambda x: np.cos(x) - x
     
@@ -104,6 +114,10 @@ if __name__ == "__main__":
     print(f"Iterations: {info2['iterations']}")
 
     # --- Example 3: Multiple roots ---
+    # TO TEST: Modify interval list [(2,4), (5,7), (-1,1)] to ranges like [(-3,-2), (3,5)] and observe which k*pi root each bracket converges to.
+    # sin(x) has roots at 0, π, 2π, 3π, ...
+    # Each interval below brackets a different root (crossing zero)
+    # To experiment: Try [-π, π], [3, 5], or any [a,b] where sin(a)·sin(b) < 0
     print("\n--- f(x) = sin(x), finding different roots ---")
     f3 = lambda x: np.sin(x)
     

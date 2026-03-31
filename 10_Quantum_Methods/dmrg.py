@@ -303,6 +303,8 @@ if __name__ == "__main__":
     print("DMRG — DENSITY MATRIX RENORMALIZATION GROUP")
     print("=" * 60)
 
+    # TO TEST: Change chain lengths L and m_states in infinite_dmrg for small systems.
+    # Observe DMRG-vs-exact energy error scaling as system size grows.
     # --- 1. Small chain: compare with exact ---
     print("\n--- Small Chain: DMRG vs Exact Diagonalization ---")
     small_chain_results = []
@@ -317,6 +319,8 @@ if __name__ == "__main__":
             print(f"  L={L:3d}: E_exact={E_exact:.8f}, E_DMRG={E_dmrg:.8f}, "
                   f"error={abs(E_dmrg - E_exact):.2e}")
 
+    # TO TEST: Sweep bond dimensions m and target length L; compare against Bethe-limit energy density.
+    # Observe truncation error and E/L improving monotonically with larger m.
     # --- 2. Convergence with bond dimension ---
     print("\n--- Bond Dimension Convergence (L=20) ---")
     L = 20
@@ -333,10 +337,14 @@ if __name__ == "__main__":
             print(f"  m={m:3d}: E/L = {e_per_site:.8f}, "
                   f"trunc_err = {trunc[-1]:.2e}")
 
+    # TO TEST: Increase/decrease L and m_states for runtime-accuracy tradeoff studies.
+    # Observe how truncation error behavior changes as entanglement burden increases.
     # --- 3. Larger chain ---
     print("\n--- Larger Chain (L=30, m=20) ---")
     energies_40, trunc_40 = infinite_dmrg(30, m_states=20, verbose=True)
 
+    # TO TEST: Compare critical-like settings versus noncritical variants by adjusting model/coupling assumptions.
+    # Observe qualitative links between entanglement expectations and required bond dimension.
     # --- 4. Entanglement growth ---
     print("\n--- Entanglement Entropy ---")
     print("  In 1D, entanglement entropy S ∝ (c/3)·log(L) for critical systems")

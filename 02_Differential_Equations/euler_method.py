@@ -101,24 +101,26 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Example 1: Exponential decay dy/dt = -y ---
+    # TO TEST: Change step sizes h to [0.05, 0.02, 0.001] or try longer time span (0, 10)
     print("\n--- Exponential Decay: dy/dt = -y, y(0) = 1 ---")
     f_exp = lambda t, y: -y
     y_exact_exp = lambda t: np.exp(-t)
 
-    for h in [0.5, 0.1, 0.01]:
+    for h in [0.5, 0.1, 0.01]:  # Try finer steps for better accuracy
         t, y = euler_method(f_exp, (0, 5), 1.0, h)
         error = np.max(np.abs(y - y_exact_exp(t)))
         print(f"  h = {h:5.3f}  |  Max error = {error:.6e}")
 
     # --- Example 2: Simple Harmonic Oscillator ---
     # x'' + ω²x = 0  →  system: y = [x, v], dy/dt = [v, -ω²x]
+    # TO TEST: Try different initial conditions: [1.0, 0.5], [0.5, 1.0], or different ω
     print("\n--- Simple Harmonic Oscillator: x'' + ω²x = 0 ---")
     omega = 2 * np.pi  # period = 1
 
     def f_sho(t, y):
         return np.array([y[1], -omega**2 * y[0]])
 
-    y0_sho = [1.0, 0.0]  # x(0)=1, v(0)=0
+    y0_sho = [1.0, 0.0]  # Change to [1.0, 0.5] or [0.5, 1.0] to experiment
 
     # Euler: energy should grow (known instability)
     t, y = euler_method(f_sho, (0, 5), y0_sho, h=0.001)

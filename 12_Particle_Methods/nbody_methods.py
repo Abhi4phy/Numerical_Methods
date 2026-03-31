@@ -438,6 +438,8 @@ if __name__ == "__main__":
 
     rng = np.random.default_rng(42)
 
+    # TO TEST: Sweep Barnes-Hut opening angle theta and softening while keeping the same particle realization.
+    # Observe force error versus runtime tradeoff relative to direct-sum reference.
     # --- 1. Accuracy comparison ---
     print("\n--- Barnes-Hut Accuracy vs Direct ---")
     N = 200
@@ -459,6 +461,8 @@ if __name__ == "__main__":
         print(f"  θ={theta:.1f}: rel_err={rel_err:.4e}, "
               f"time BH={t_bh*1e3:.1f}ms vs Direct={t_direct*1e3:.1f}ms")
 
+    # TO TEST: Increase N and compare timing scaling for direct O(N^2) and BH O(N log N).
+    # Observe crossover point where BH becomes substantially faster.
     # --- 2. Timing comparison ---
     print("\n--- Scaling: Direct vs Barnes-Hut ---")
     for N in [100, 500, 1000, 2000]:
@@ -476,6 +480,8 @@ if __name__ == "__main__":
         print(f"  N={N:5d}: Direct={t_d*1e3:8.1f}ms, BH={t_b*1e3:8.1f}ms, "
               f"speedup={t_d/t_b:.1f}x")
 
+    # TO TEST: Vary N_grid and box size L for fixed particle count.
+    # Observe runtime/resolution tradeoff and smoothness of grid-derived forces.
     # --- 3. Particle-Mesh ---
     print("\n--- Particle-Mesh Method ---")
     N_pm = 500
@@ -489,6 +495,8 @@ if __name__ == "__main__":
         t_pm = time.perf_counter() - t0
         print(f"  Grid {N_grid:3d}×{N_grid:3d}: time = {t_pm*1e3:.1f}ms")
 
+    # TO TEST: Change dt_sim, n_sim, and softening in the leapfrog loop.
+    # Observe cluster morphology evolution and qualitative integration stability.
     # --- 4. Simple N-body integration ---
     print("\n--- Plummer Cluster Evolution ---")
     N_cl = 200

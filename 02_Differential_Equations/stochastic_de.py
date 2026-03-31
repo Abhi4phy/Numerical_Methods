@@ -272,6 +272,11 @@ if __name__ == "__main__":
     rng = np.random.default_rng(42)
 
     # --- 1. Geometric Brownian Motion ---
+    # TO TEST: Modify drift (mu), volatility (sigma), initial price (S0), and time horizon (T).
+    # Parameters: mu (0.05=5% drift), sigma (0.3=30% volatility), S0 (100), T (2 years), dt, n_paths.
+    # Initial values: S0=100, mu=0.05, sigma=0.3 (typical stock-like dynamics).
+    # Observe: Mean and variance of S(T) vs exact values. Increase n_paths for better estimates.
+    # Note: Try mu > sigma/2 for upward trend, or mu < -sigma/2 for downward trend.
     # dS = μ·S·dt + σ·S·dW
     # Exact: S(t) = S₀·exp((μ - σ²/2)t + σ·W(t))
     print("\n--- Geometric Brownian Motion ---")
@@ -296,6 +301,11 @@ if __name__ == "__main__":
     print(f"  Var[S(T)]: exact={Var_exact:.1f}, MC={np.var(S_em[:, -1]):.1f}")
 
     # --- 2. Strong Convergence Test ---
+    # TO TEST: Compare Euler-Maruyama (order 0.5) vs Milstein (order 1.0) vs Stochastic RK (order 1.0).
+    # Parameters: dts_test (time steps), n_paths (number of Monte Carlo paths), x0 (initial condition).
+    # Initial values: x0=1.0, dts=[0.5, 0.2, 0.1, 0.05, 0.02, 0.01, 0.005].
+    # Observe: Error scales as dt^0.5 for EM, dt^1.0 for higher-order methods (on log-log plot).
+    # Try: Increase n_paths to 10000 for smoother convergence curves.
     print("\n--- Strong Convergence Test ---")
     dts_test = [0.5, 0.2, 0.1, 0.05, 0.02, 0.01, 0.005]
     n_test = 5000

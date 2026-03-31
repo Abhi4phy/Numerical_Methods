@@ -128,21 +128,26 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Example 1: cos(x) = x (fixed point of cosine) ---
+    # Fixed-point: need |g'(x*)| < 1 at the root for convergence
+    # TO TEST: Try different starting points: 0.0, 1.0, 1.5 (all converge here)
     print("\n--- x = cos(x) (the Dottie number) ---")
     g1 = lambda x: np.cos(x)
     
-    root1, info1 = fixed_point_iteration(g1, 0.5)
+    root1, info1 = fixed_point_iteration(g1, 0.5)  # Change starting point to 0.0, 1.0, or 1.5
     gp, conv = check_convergence_condition(g1, root1)
     print(f"Fixed point: {root1:.15f}")
     print(f"|g'(x*)|: {gp:.6f} ({'converges' if conv else 'diverges'})")
     print(f"Iterations: {info1['iterations']}")
 
     # --- Example 2: Different formulations of same equation ---
+    # IMPORTANT: Different rearrangements converge differently!
+    # Same f(x) can give different g(x) with different convergence speeds
+    # TO TEST: Change initial guess for gA from 1.5 to other values
     print("\n--- x³ = x + 2, rearranged different ways ---")
     # f(x) = x³ - x - 2 = 0
     # Formulation A: x = (x + 2)^{1/3}
     gA = lambda x: (x + 2)**(1/3)
-    rA, iA = fixed_point_iteration(gA, 1.5)
+    rA, iA = fixed_point_iteration(gA, 1.5)  # Try starting at 1.0, 2.0, or 0.5
     gpA, cA = check_convergence_condition(gA, rA)
     print(f"  g(x) = (x+2)^(1/3): root = {rA:.12f}, iters = {iA['iterations']}, "
           f"|g'| = {gpA:.4f}")
@@ -159,16 +164,20 @@ if __name__ == "__main__":
         print(f"  g(x) = x³ - 2:      {error_msg}, iters = {iB['iterations']}")
 
     # --- Aitken acceleration ---
+    # Aitken can accelerate LINEAR convergence to QUADRATIC!
+    # TO TEST: Try with g1, or use a slower-converging g like lambda x: 1 + 0.3*sin(x)
     print("\n--- Aitken Acceleration ---")
-    r_plain, i_plain = fixed_point_iteration(g1, 0.5)
-    r_aitken, i_aitken = aitken_acceleration(g1, 0.5)
+    r_plain, i_plain = fixed_point_iteration(g1, 0.5)  # Plain iteration
+    r_aitken, i_aitken = aitken_acceleration(g1, 0.5)  # Accelerated - should be faster!
     print(f"  Plain:  {i_plain['iterations']} iterations")
     print(f"  Aitken: {i_aitken['iterations']} iterations (accelerated!)")
 
     # --- Self-consistent equation (physics-like) ---
+    # Similar to self-consistent field methods (Hartree-Fock, Density Functional Theory)
+    # TO TEST: Change coefficient 0.5 to 0.3, 0.7, or 1.2 to see convergence differences
     print("\n--- Self-consistent: x = 1 + 0.5·sin(x) ---")
     g_sc = lambda x: 1 + 0.5 * np.sin(x)
-    r_sc, i_sc = fixed_point_iteration(g_sc, 1.0)
+    r_sc, i_sc = fixed_point_iteration(g_sc, 1.0)  # Try different starting points
     gp_sc, _ = check_convergence_condition(g_sc, r_sc)
     print(f"  Fixed point: {r_sc:.12f}")
     print(f"  |g'(x*)|: {gp_sc:.6f}")

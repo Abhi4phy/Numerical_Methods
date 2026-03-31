@@ -244,6 +244,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Example 1: Linear regression Bayesian inference ---
+    # TO TEST: Change proposal_std, chain length, burn-in, and initial theta0; observe acceptance rate, ESS, and posterior recovery of true parameters.
     print("\n--- Example 1: Bayesian Linear Regression ---")
     print("Model: y = a·x + b + ε,  ε ~ N(0, σ²)")
     print("Priors: a ~ N(0, 10), b ~ N(0, 10), σ ~ HalfNormal(5)")
@@ -285,6 +286,7 @@ if __name__ == "__main__":
     print(f"σ: {np.mean(sigma_samples):.3f} ± {np.std(sigma_samples):.3f} (true: {sigma_true})")
 
     # --- Example 2: Gibbs sampling from bivariate normal ---
+    # TO TEST: Vary correlation rho and sample counts, then observe estimated correlation and marginal moments convergence.
     print("\n--- Example 2: Gibbs Sampling — Bivariate Normal ---")
     rho = 0.8
     
@@ -298,6 +300,7 @@ if __name__ == "__main__":
           f"std={np.std(gibbs_samples[:, 0]):.3f}")
 
     # --- Example 3: HMC ---
+    # TO TEST: Change step_size and n_leapfrog, and observe HMC acceptance rate versus covariance reconstruction error.
     print("\n--- Example 3: Hamiltonian Monte Carlo ---")
     
     # 10D correlated Gaussian

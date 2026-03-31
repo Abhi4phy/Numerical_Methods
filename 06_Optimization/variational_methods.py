@@ -204,6 +204,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Problem 1: Shortest path (geodesic in flat space) ---
+    # TO TEST: Change boundary conditions from (0,1)->(0,2) or grid size N=50->100, and observe max|y-x| behavior and arc-length error.
     print("\n--- Problem 1: Shortest path from (0,0) to (1,1) ---")
     print("F = √(1 + y'²),  Euler-Lagrange → y'' = 0 → straight line")
     
@@ -222,6 +223,7 @@ if __name__ == "__main__":
     print(f"Solution is linear: max|y - x| = {np.max(np.abs(y_geo - x_geo)):.2e}")
 
     # --- Problem 2: Catenary ---
+    # TO TEST: Modify domain/boundaries (for example x in [-2,2] with y(-2)=y(2)=cosh(2)) and observe changes in max error versus cosh(x).
     print("\n--- Problem 2: Catenary (hanging chain) ---")
     print("Minimize potential energy: J[y] = ∫ y √(1+y'²) dx")
     print("y(−1)=cosh(1), y(1)=cosh(1)")
@@ -239,6 +241,7 @@ if __name__ == "__main__":
     print(f"Max error vs cosh(x): {max_err:.6e}")
 
     # --- Problem 3: Brachistochrone ---
+    # TO TEST: Change endpoint (x1,y1), alpha, or max_iter in direct_minimization, and observe travel-time J_b plus agreement with cycloid comparison.
     print("\n--- Problem 3: Brachistochrone (fastest descent) ---")
     print("Minimize travel time: J[y] = ∫ √((1+y'²)/(2gy)) dx")
     print("From (0,0) to (1, 0.5), y downward positive")

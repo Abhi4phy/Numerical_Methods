@@ -229,6 +229,7 @@ if __name__ == "__main__":
     rng = np.random.default_rng(42)
 
     # --- Double-well potential ---
+    # TO TEST: Vary temperatures, swap_interval, and barrier/step_size, then observe swap rates and cold-replica well transitions versus standard MCMC.
     # V(x) = (x² - a²)² / (4a²) — barrier height ~ a²/4
     
     def double_well_1d(x, a=2.0, barrier=4.0):
@@ -272,6 +273,7 @@ if __name__ == "__main__":
     print(f"    Improvement: {transitions_pt}x vs {transitions_std}x (standard)")
 
     # --- 2D Multimodal ---
+    # TO TEST: Change number of replicas and temperature range (or well locations), and observe whether cold samples visit all modes.
     print("\n--- 2D Three-Gaussian Mixture ---")
     
     def three_wells_2d(x):

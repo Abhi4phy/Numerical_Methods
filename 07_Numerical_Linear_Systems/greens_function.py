@@ -175,6 +175,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Problem 1: Poisson equation ---
+    # TO TEST: Change source f_poisson (for example sin(2*pi*x)) or grid size N, and observe max error against the corresponding analytical solution.
     print("\n--- Problem 1: -u'' = sin(πx), u(0)=u(1)=0 ---")
     L = 1.0
     N = 100
@@ -190,6 +191,7 @@ if __name__ == "__main__":
     print(f"u(0.5) exact:    {1/np.pi**2:.8f}")
 
     # --- Problem 2: Helmholtz equation ---
+    # TO TEST: Vary k (for example 1.0, 3.0) and compare u_helm to u_helm_exact to observe stiffness and error changes.
     print("\n--- Problem 2: -u'' + 4u = 1, u(0)=u(1)=0 ---")
     k = 2.0
     f_const = lambda x: 1.0
@@ -201,6 +203,7 @@ if __name__ == "__main__":
     print(f"Max error: {err_helm:.6e}")
 
     # --- Problem 3: Heat equation ---
+    # TO TEST: Change diffusion D and times list, then observe peak decay and spread width against the Gaussian closed form.
     print("\n--- Problem 3: Heat equation, Gaussian initial condition ---")
     D = 0.1
     x_heat = np.linspace(-5, 5, 200)

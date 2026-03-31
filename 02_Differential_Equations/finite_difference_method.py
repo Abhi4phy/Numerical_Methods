@@ -184,6 +184,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- 1D Poisson equation ---
+    # TO TEST: Vary spatial resolution n_points (25, 50, 100) and boundary conditions (bc_left, bc_right).
+    # Parameters: n_points (interior grid), domain [0,1], f(x)=π²sin(πx), BCs: u(0)=u(1)=0.
+    # Initial values: n_points=50 (exact: u(x)=sin(πx)).
+    # Observe: Max error scales as O(h²) where h=1/(n_points+1). Doubling n_points → error/4.
+    # Try: Change boundary values to bc_left=1, bc_right=-1, or modify source f to x or exp(x).
     print("\n--- Poisson Equation: -u'' = sin(πx), u(0)=u(1)=0 ---")
     f = lambda x: np.sin(np.pi * x) * np.pi**2
     u_exact = lambda x: np.sin(np.pi * x)  # Exact solution
@@ -193,6 +198,11 @@ if __name__ == "__main__":
     print(f"Max error (n=50): {error:.6e}")
 
     # --- Heat equation ---
+    # TO TEST: Vary thermal diffusivity (alpha: 0.001, 0.01, 0.1), spatial/temporal resolution (nx, nt), final time T.
+    # Parameters: alpha (diffusivity), L (domain), T (final time), nx,nt (grid/time steps), u0 (initial profile).
+    # Initial values: alpha=0.01, L=1, T=2, nx=50, nt=5000 (watch the CFL number r=alpha*dt/dx²).
+    # Observe: Solution should diffuse smoothly. Smaller alpha → slower diffusion. Check CFL condition r≤0.5!
+    # Try: Set alpha=0.1, nt=100 (r>0.5) to see unstability (solution blows up). Then reduce nt to 1000.
     print("\n--- Heat Equation: ∂u/∂t = 0.01 ∂²u/∂x² ---")
     u0 = lambda x: np.sin(np.pi * x)
     x_heat, sols_heat = heat_equation_1d(
@@ -200,6 +210,11 @@ if __name__ == "__main__":
     )
 
     # --- Wave equation ---
+    # TO TEST: Vary wave speed c (0.5, 1.0, 2.0), initial pulse shape (Gaussian width, position), domain length L.
+    # Parameters: c (wave speed), L (domain), T (time), nx,nt (spatial/temporal resolution), u0 (initial displacement).
+    # Initial values: c=1, L=1, T=1, nx=200, nt=400 (Gaussian pulse at x=0.3, width~0.1).
+    # Observe: Pulse should split into left/right traveling waves. Monitor CFL: r=c*dt/dx must be ≤1!
+    # Try: c=2 (faster wave), or u0=lambda x: np.sin(4*pi*x) (sinusoidal initial), or L=2 (larger domain).
     print("\n--- Wave Equation: ∂²u/∂t² = ∂²u/∂x² ---")
     u0_wave = lambda x: np.exp(-100 * (x - 0.3)**2)  # Gaussian pulse
     x_wave, sols_wave = wave_equation_1d(

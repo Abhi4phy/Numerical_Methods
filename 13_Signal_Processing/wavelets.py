@@ -365,6 +365,8 @@ if __name__ == "__main__":
     print("WAVELET TRANSFORM DEMO")
     print("=" * 60)
 
+    # TO TEST: Change signal length N, decomposition level, and wavelet family.
+    # Observe coefficient energy distribution and reconstruction error behavior.
     # --- 1. Haar decomposition ---
     print("\n--- Haar Wavelet Decomposition ---")
     N = 256
@@ -389,6 +391,8 @@ if __name__ == "__main__":
     err = np.max(np.abs(reconstructed - signal))
     print(f"  Reconstruction error: {err:.2e}")
 
+    # TO TEST: Sweep noise_level, threshold mode (soft/hard), and wavelet type.
+    # Observe SNR improvement and edge preservation versus oversmoothing artifacts.
     # --- 2. Denoising ---
     print("\n--- Wavelet Denoising ---")
     rng = np.random.default_rng(42)
@@ -409,6 +413,8 @@ if __name__ == "__main__":
         print(f"  {wavelet}: SNR noisy = {snr_noisy:.1f} dB → "
               f"denoised = {snr_denoised:.1f} dB")
 
+    # TO TEST: Vary keep_fraction aggressively (e.g., 0.8 to 0.02) and compare wavelets.
+    # Observe RMSE growth relative to retained-coefficient ratio.
     # --- 3. Compression ---
     print("\n--- Wavelet Compression ---")
     for keep in [0.5, 0.2, 0.1, 0.05]:
@@ -417,6 +423,8 @@ if __name__ == "__main__":
         print(f"  Keep {keep*100:5.1f}%: {n_kept}/{n_total} coeffs, "
               f"RMSE = {rmse:.4f}")
 
+    # TO TEST: Modify frequency components and time-localized bursts in signal_mr.
+    # Observe which detail levels capture each scale-localized feature.
     # --- 4. Multi-resolution ---
     print("\n--- Multi-Resolution Analysis ---")
     # Signal with features at different scales

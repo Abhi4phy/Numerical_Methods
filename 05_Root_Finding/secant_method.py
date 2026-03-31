@@ -137,10 +137,12 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Example 1 ---
+    # Secant method needs TWO initial guesses (no bracket required like bisection)
+    # TO TEST: Try different starting pairs: [0.5, 2.5], [1.0, 3.0], [0.0, 2.0]
     print("\n--- f(x) = x³ - x - 2 ---")
     f = lambda x: x**3 - x - 2
     
-    root, info = secant_method(f, 1.0, 2.0)
+    root, info = secant_method(f, 1.0, 2.0)  # Change starting points to other pairs
     print(f"Root: {root:.15f}")
     print(f"f(root): {f(root):.2e}")
     print(f"Iterations: {info['iterations']}")
@@ -154,11 +156,14 @@ if __name__ == "__main__":
             print(f"  k={k}: approx order = {order:.3f} (φ ≈ 1.618)")
 
     # --- Regula Falsi vs Illinois ---
+    # Both methods maintain bracketing like bisection but use interpolation
+    # TO TEST: Try other brackets or different functions
+    # Example: regula_falsi(f2, 1, 4) or different f2 = lambda x: ...
     print("\n--- Comparing Regula Falsi vs Illinois ---")
     f2 = lambda x: x**3 - 2*x - 5
 
-    root_rf, info_rf = regula_falsi(f2, 2, 3)
-    root_il, info_il = illinois_method(f2, 2, 3)
+    root_rf, info_rf = regula_falsi(f2, 2, 3)  # Change [2, 3] to other brackets
+    root_il, info_il = illinois_method(f2, 2, 3)  # Same bracket for comparison
     print(f"Regula Falsi: root = {root_rf:.12f}, iterations = {info_rf['iterations']}")
     print(f"Illinois:     root = {root_il:.12f}, iterations = {info_il['iterations']}")
 

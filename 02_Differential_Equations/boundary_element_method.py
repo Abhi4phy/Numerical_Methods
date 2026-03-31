@@ -126,6 +126,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- 1D BEM for Poisson equation ---
+    # TO TEST: Modify spatial resolution n_interior (10, 50, 200), or try different source terms f(x).
+    # Parameters: domain (0,1), f(x)=π²sin(πx), boundary values u(0)=u(1)=0, n_interior=50.
+    # Initial values: Source f(x), exact u(x)=sin(πx), compute via Green's function integration.
+    # Observe: Max error. BEM gives mid-range accuracy (not as good as FEM, but works well 1D).
+    # Note: BEM shines in 2D/3D exterior problems (infinite domains). Try n_interior=200 for higher accuracy.
     print("\n--- 1D BEM: -u'' = π²sin(πx), u(0)=u(1)=0 ---")
     f = lambda x: np.pi**2 * np.sin(np.pi * x)
     u_exact = lambda x: np.sin(np.pi * x)
@@ -137,6 +142,11 @@ if __name__ == "__main__":
     print(f"  u(0.5) exact:    {u_exact(0.5):.6f}")
 
     # --- 2D Potential from charges ---
+    # TO TEST: Add/modify charge positions and magnitudes. Try tripole, quadrupole, or random arrays.
+    # Parameters: charges (list of (x, y, q) tuples), evaluation grid 100x100 on [-1,1]×[-1,1].
+    # Initial values: Dipole at (±0.3, ±0.3) with ±1.0 charges.
+    # Observe: Potential contours should be symmetric around domain center. Max/min values.
+    # Try: charges=[(0, 0.5, 1), (0, -0.5, 1)] (vertical dipole), or triple charge for asymmetric field.
     print("\n--- 2D Potential from point charges ---")
     charges = [
         (0.3, 0.3, 1.0),   # Positive charge

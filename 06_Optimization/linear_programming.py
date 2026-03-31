@@ -151,6 +151,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Example 1: Production planning ---
+    # TO TEST: Change objective/resource coefficients in c, A, b and observe how optimal vertex and max profit shift.
     print("\n--- Example 1: Production Planning ---")
     print("Maximize profit: 5x₁ + 4x₂")
     print("Subject to:")
@@ -169,6 +170,7 @@ if __name__ == "__main__":
     print(f"Max profit = {-obj:.2f}")
     
     # --- Example 2: Diet problem ---
+    # TO TEST: Modify nutrient thresholds in b_neg or item costs in c, and observe feasibility plus resulting minimum cost from linprog.
     print("\n--- Example 2: Diet Problem ---")
     print("Minimize cost: 2x₁ + 3x₂ + x₃")
     print("Subject to (nutritional requirements):")
@@ -223,6 +225,7 @@ if __name__ == "__main__":
         print(f"Min cost = {res.fun:.4f}")
     
     # --- Example 3: Simple LP with our simplex ---
+    # TO TEST: Perturb RHS bounds b (for example [35, 55, 28]) and observe status, active constraints, and optimal objective.
     print("\n--- Example 3: Standard form LP ---")
     print("Minimize: -2x₁ - 3x₂ - x₃")
     print("Subject to:")

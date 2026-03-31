@@ -146,18 +146,32 @@ if __name__ == "__main__":
     kappa = evals[-1] / evals[0]
     print(f"Condition number: {kappa:.1f}")
 
-    # Standard CG
+    # --- Example 1: Standard Conjugate Gradient ---
+    # Basic CG implementation for SPD systems
+    # TO TEST: Change system size n (50 to 200, 500), modify condition number
+    # by changing B or diagonal shift (10 to 5, 100), try different tolerance values,
+    # or use different RHS vectors (random, ones, specific patterns)
+    # Observe convergence iterations vs condition number
     print("\n--- Conjugate Gradient ---")
     x_cg, hist_cg = conjugate_gradient(A, b)
     print(f"Residual: {np.linalg.norm(A @ x_cg - b):.2e}")
 
-    # Jacobi-preconditioned CG
+    # --- Example 2: Preconditioned CG with Jacobi ---
+    # Shows how preconditioning reduces iteration count
+    # TO TEST: Try other preconditioners (SSOR, ILU), change the diagonal shift,
+    # compare with other preconditioner strategies, modify system conditioning,
+    # or test with highly non-uniform diagonal (some diagonal elements very small)
     print("\n--- Preconditioned CG (Jacobi) ---")
     M_inv = np.diag(1.0 / np.diag(A))  # Jacobi preconditioner
     x_pcg, hist_pcg = preconditioned_cg(A, b, M_inv)
     print(f"Residual: {np.linalg.norm(A @ x_pcg - b):.2e}")
 
-    # Ill-conditioned system
+    # --- Example 3: Ill-conditioned system comparison ---
+    # Demonstrates the critical importance of preconditioning for poor systems
+    # TO TEST: Change the diagonal scaling (0.01 to 0.001, 0.1),
+    # increase problem size n, try different initial guesses,
+    # compare with other preconditioners, or modify the condition number manually
+    # Observe how many iterations CG needs vs PCG on ill-conditioned systems
     print("\n--- Ill-conditioned system ---")
     A_ill = B.T @ B + 0.01 * np.eye(n)
     kappa_ill = np.linalg.eigvalsh(A_ill)[-1] / np.linalg.eigvalsh(A_ill)[0]

@@ -119,6 +119,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Basic example ---
+    # TO TEST: Modify x_nodes spacing, interpolation degree (number of nodes), and x_test; observe changes in interpolation error and divided-difference coefficients.
     print("\n--- Interpolate exp(x) at 5 points ---")
     x_nodes = np.array([0.0, 0.5, 1.0, 1.5, 2.0])
     y_nodes = np.exp(x_nodes)
@@ -141,6 +142,7 @@ if __name__ == "__main__":
     print(f"Error = {abs(P - exact):.2e}")
 
     # --- Adding a point incrementally ---
+    # TO TEST: Change the added point (x_new, y_new) to values inside and outside the original node range; observe whether the updated polynomial improves local or global accuracy.
     print("\n--- Adding point x=2.5 incrementally ---")
     x_new, coeffs_new = newton_add_point(x_nodes, coeffs, 2.5, np.exp(2.5))
     P_new = newton_interpolation(x_new, coeffs_new, x_test)
@@ -148,6 +150,7 @@ if __name__ == "__main__":
     print(f"After:  P({x_test}) error = {abs(P_new - exact):.2e}")
 
     # --- Forward differences for equally spaced data ---
+    # TO TEST: Modify x_deg to keep or break equal spacing and compare forward-difference magnitudes; observe how table structure reflects smoothness and spacing assumptions.
     print("\n--- Forward Difference Table (sin at 0°, 30°, 60°, 90°, 120°) ---")
     x_deg = np.array([0, 30, 60, 90, 120])
     x_rad = np.radians(x_deg)

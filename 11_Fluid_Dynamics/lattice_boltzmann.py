@@ -299,6 +299,8 @@ if __name__ == "__main__":
     print("LATTICE BOLTZMANN METHOD DEMO")
     print("=" * 60)
 
+    # TO TEST: Vary Re, u_lid, tau-compatible grid size, and runtime n_steps.
+    # Observe vortex structure, centerline velocity shape, and convergence toward steady flow.
     # --- 1. Lid-driven cavity ---
     print("\n--- Lid-Driven Cavity (Re=100) ---")
     Nx, Ny = 100, 100
@@ -312,6 +314,8 @@ if __name__ == "__main__":
     print(f"  Max velocity: {lbm_cavity.speed().max():.6f}")
     print(f"  Center vortex location: check plot")
 
+    # TO TEST: Adjust tau_p, pressure gradient dpdx, and channel height Ny_p.
+    # Observe agreement with parabolic analytic profile and relative-error trends.
     # --- 2. Poiseuille flow (validation) ---
     print("\n--- Poiseuille Flow (analytic solution) ---")
     Nx_p, Ny_p = 50, 30
@@ -349,6 +353,8 @@ if __name__ == "__main__":
     print(f"  Max velocity: exact = {u_exact.max():.6f}, LBM = {ux_profile.max():.6f}")
     print(f"  Relative error: {rel_err:.4e}")
 
+    # TO TEST: Sweep Re, cylinder radius/location, and domain size.
+    # Observe wake symmetry breaking, vortex shedding onset, and vorticity magnitude changes.
     # --- 3. Flow around cylinder ---
     print("\n--- Flow Around Cylinder (Re=40) ---")
     lbm_cyl = flow_around_cylinder(200, 80, Re=40, n_steps=5000, 

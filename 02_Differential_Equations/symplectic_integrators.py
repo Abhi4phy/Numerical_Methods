@@ -218,6 +218,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # === 1. Harmonic Oscillator ===
+    # TO TEST: Try different integrators (Symplectic Euler vs Velocity Verlet vs Yoshida 4th).
+    # Parameters to modify: omega (frequency), n_periods (integration duration), dt (time step).
+    # Initial values: q0=[1.0], p0=[0.0] (starts at max position with zero momentum).
+    # Observe: Maximum energy drift |ΔE/E₀|. Symplectic methods should conserve energy far better than RK4.
+    # Insight: Yoshida 4th is slowest but most accurate. Smaller dt → smaller drift.
     print("\n--- Harmonic Oscillator ---")
     omega = 1.0
     m = 1.0
@@ -261,6 +266,11 @@ if __name__ == "__main__":
     print(f"  {'RK4 (non-sympl.)':20s}: max |ΔE/E₀| = {np.max(dE_rk4)/E_rk4[0]:.3e}")
     
     # === 2. Kepler Problem ===
+    # TO TEST: Vary eccentricity e and integration duration (number of orbits).
+    # Parameters: e (eccentricity 0-1, 0=circle, 0.5=ellipse), n_steps_kep, dt_kep.
+    # Initial values: q0_kep=[1-e, 0] (perihelion), velocity computed from vis-viva equation.
+    # Observe: Both energy (ΔE/E₀) and angular momentum (ΔL/L₀) conservation.
+    # Note: Even symplectic methods will drift slightly over 50 orbits; less drift = better method.
     print("\n--- Kepler Problem (elliptical orbit) ---")
     GM = 1.0
     
@@ -289,6 +299,11 @@ if __name__ == "__main__":
               f"ΔL/L₀ = {np.max(np.abs(L-L[0])/np.abs(L[0])):.3e}")
     
     # === 3. Double Pendulum (chaotic) ===
+    # TO TEST: Modify initial conditions q0_dp and p0_dp to see different chaotic behavior.
+    # Parameters: q0_dp (positions), p0_dp (momenta), k (spring constant), dt, n_steps_dp.
+    # Initial values: q0_dp=[1.0, 0.5], p0_dp=[0.0, 0.3] (starts partially extended).
+    # Observe: Energy conservation |ΔE/E₀| even though trajectory is chaotic.
+    # Try: Increase coupling or change initial angles to see how energy is still preserved.
     print("\n--- Double Pendulum (energy conservation in chaos) ---")
 
     def force_dp(q):

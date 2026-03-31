@@ -162,6 +162,7 @@ if __name__ == "__main__":
     print("Eigenvalues:", evals_np)
 
     # Power Iteration
+    # TO TEST: Try different initial guesses or different matrices  
     print("\n--- Power Iteration (dominant eigenvalue) ---")
     np.random.seed(42)
     lam, v = power_iteration(A)

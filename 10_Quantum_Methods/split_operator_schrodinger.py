@@ -281,6 +281,8 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- 1. Free particle wave packet ---
+    # TO TEST: Try different initial conditions: x0=0, sigma=2, or k0=5
+    # Observe wave packet spreading and norm conservation
     print("\n--- Free Particle Gaussian Wave Packet ---")
     solver = QuantumSolver1D(x_min=-30, x_max=30, N=1024)
     
@@ -302,6 +304,8 @@ if __name__ == "__main__":
     print(f"  σ_x: {sig0:.3f} → {sigf:.3f} (spreading)")
 
     # --- 2. Quantum tunneling ---
+    # TO TEST: Vary barrier height, width, or particle energy (k0 momentum)
+    # Lower energy particles have lower tunneling probability
     print("\n--- Quantum Tunneling through Barrier ---")
     solver2 = QuantumSolver1D(x_min=-30, x_max=30, N=2048)
     

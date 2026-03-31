@@ -122,6 +122,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Example 1: Smooth problem with varying timescales ---
+    # TO TEST: Modify stiffness parameter mu (1, 3, 10) and tolerance tol (1e-6 to 1e-10).
+    # Parameters: mu (=relaxation parameter), y0=[2,0] (initial state), tol (error tolerance), time span [0,30].
+    # Initial values: mu=3, tol=1e-8 (moderate stiffness and precision).
+    # Observe: Number of adaptive points vs fixed-step points. Adaptive should be 10-50% of fixed!
+    # Try: Increase mu to 10 for more regions with small time scales (RKF45 will use smaller steps).
     print("\n--- van der Pol oscillator (μ=3) ---")
     # x'' - μ(1-x²)x' + x = 0
     mu = 3.0
@@ -141,6 +146,11 @@ if __name__ == "__main__":
     print(f"Adaptive uses {len(t_adapt)/len(t_fixed)*100:.1f}% of fixed-step points")
 
     # --- Example 2: Exponential decay (exact solution known) ---
+    # TO TEST: Try different decay rates (-5y, -20y, -100y) and tolerances (1e-8, 1e-12).
+    # Parameters: decay rate (coefficient of y), y0=1.0 (initial), tol=1e-10, time horizon [0,2].
+    # Initial values: dy/dt=-10y gives smooth solution (RKF45 takes large steps). Try -100y for stiff problem.
+    # Observe: Max error vs exact solution exp(-10*t). Should be < tol. Compare with RK4 fixed-step.
+    # Note: Very stiff problems (coefficients >>10) may need specially-designed solvers (DOPRI8, Rosenbrock).
     print("\n--- Exponential decay: dy/dt = -10y, y(0) = 1 ---")
     f_exp = lambda t, y: -10 * y
     t_a, y_a = rkf45(f_exp, (0, 2), 1.0, tol=1e-10)

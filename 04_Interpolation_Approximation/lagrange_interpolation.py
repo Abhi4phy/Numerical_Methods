@@ -90,6 +90,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Example 1: Interpolate sin(x) ---
+    # TO TEST: Modify node counts n and interval endpoints; observe max interpolation error and how rapidly accuracy improves with additional nodes.
     print("\n--- Interpolating sin(x) with n points ---")
     for n in [3, 5, 7, 10]:
         x_nodes = np.linspace(0, np.pi, n)
@@ -103,6 +104,7 @@ if __name__ == "__main__":
         print(f"  n = {n:2d}  |  Max error = {error:.6e}")
 
     # --- Runge's phenomenon ---
+    # TO TEST: Change runge function sharpness (coefficient 25) and n values; observe divergence with equidistant nodes versus stability with Chebyshev nodes.
     print("\n--- Runge's Phenomenon: f(x) = 1/(1+25x²) ---")
     runge = lambda x: 1.0 / (1 + 25 * x**2)
     

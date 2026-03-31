@@ -121,6 +121,12 @@ if __name__ == "__main__":
     print("QR DECOMPOSITION DEMO")
     print("=" * 60)
 
+    # --- Example 1: Modified Gram-Schmidt vs Householder QR ---
+    # Compares two QR factorization methods on the same matrix
+    # TO TEST: Change matrix A to different sizes/conditions (use np.random.randn or ill-conditioned),
+    # try matrices with linearly dependent columns,
+    # or modify matrix to rectangular shapes (m > n, m < n)
+    # Observe numerical accuracy differences and reconstruction error
     A = np.array([
         [1, 1, 0],
         [1, 0, 1],
@@ -130,7 +136,11 @@ if __name__ == "__main__":
     print("\nMatrix A:")
     print(A)
 
-    # Gram-Schmidt
+    # --- Example 2: Modified Gram-Schmidt QR ---
+    # Gram-Schmidt orthogonalization, more stable than classical variant
+    # TO TEST: Try different A matrices like A.T or np.random.randn(5,3),
+    # modify using ill-conditioned matrices (with columns nearly parallel),
+    # test rectangular matrices, or vary precision requirements
     Q1, R1 = qr_gram_schmidt(A)
     print("\n--- Modified Gram-Schmidt ---")
     print("Q:\n", Q1)
@@ -138,7 +148,12 @@ if __name__ == "__main__":
     print("Q^T Q (should be I):\n", np.round(Q1.T @ Q1, 10))
     print("Reconstruction error:", np.linalg.norm(A - Q1 @ R1))
 
-    # Householder
+    # --- Example 3: Householder QR and Least-Squares ---
+    # Householder reflections for numerically stable QR, then solves least-squares
+    # TO TEST: Change A_ls matrix dimensions (more or fewer equations),
+    # modify y_data to have different noise levels (0.1, 1.0, 0.01),
+    # try different x_data ranges or polynomial degrees,
+    # fit different functions like y = a*cos(x) + b*sin(x)
     Q2, R2 = qr_householder(A)
     print("\n--- Householder ---")
     print("Q:\n", np.round(Q2, 6))
@@ -146,8 +161,9 @@ if __name__ == "__main__":
     print("Q^T Q (should be I):\n", np.round(Q2.T @ Q2, 10))
     print("Reconstruction error:", np.linalg.norm(A - Q2 @ R2))
 
-    # Least-squares example
-    print("\n--- Least-Squares Problem ---")
+    # --- Example 3 (continued): Least-Squares Problem ---
+    # Demonstrates using QR to solve overdetermined least-squares systems
+    print("\n--- Least-Squares Problem (example 3) ---")
     # Fit y = a + b*x to noisy data
     np.random.seed(42)
     x_data = np.linspace(0, 5, 20)

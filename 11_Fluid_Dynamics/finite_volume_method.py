@@ -355,6 +355,8 @@ if __name__ == "__main__":
     print("FINITE VOLUME METHOD DEMO")
     print("=" * 60)
 
+    # TO TEST: Vary CFL, flux_scheme, limiter, and initial discontinuity width/shape.
+    # Observe stability, diffusion, and oscillation tradeoffs via L2 error and profile sharpness.
     # --- 1. Linear Advection ---
     print("\n--- Linear Advection ---")
     N = 200
@@ -381,6 +383,8 @@ if __name__ == "__main__":
         results[scheme] = (u_final, err)
         print(f"  {scheme:20s}: L2 error = {err:.6e}")
 
+    # TO TEST: Change initial wave amplitude, final time, and solver flux (godunov/rusanov).
+    # Observe shock steepening time and post-shock numerical dissipation behavior.
     # --- 2. Burgers Equation (shock formation) ---
     print("\n--- Inviscid Burgers Equation ---")
     N_b = 400
@@ -399,6 +403,8 @@ if __name__ == "__main__":
     print(f"  Simulated to t = {n_steps_b * dt_b:.4f}")
     print(f"  max(u) = {u_burgers.max():.4f}, min(u) = {u_burgers.min():.4f}")
 
+    # TO TEST: Modify left/right states, gamma, dt, and resolution N_e.
+    # Observe shock/contact/rarefaction structure and sensitivity to timestep/resolution.
     # --- 3. Sod Shock Tube (Euler equations) ---
     print("\n--- Sod Shock Tube (Euler Equations) ---")
     N_e = 400

@@ -114,6 +114,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Convergence comparison ---
+    # TO TEST: Verify Simpson's O(h⁴) > Trapezoidal O(h²). Check error ratios: Simpson should have ~16x improvement.
+    # Parameters: f=sin(x), n=[6,12,24,48,96] (must be even for Simpson 1/3), domain [0,π], exact=2.
+    # Initial values: All three methods (Trapezoidal, Simpson 1/3, Simpson 3/8).
+    # Observe: Error columns show Simpson 1/3 much smaller. Error ratio ≈ 16 for Simpson vs 4 for Trapez.
+    # Try: Compare on f=x⁴ (Simpson should be exact!), or f=exp(x).
     print("\n--- ∫₀^π sin(x) dx = 2 ---")
     print(f"{'n':>6s} | {'Trapezoidal':>14s} | {'Simpson 1/3':>14s} | {'Simpson 3/8':>14s}")
     print("-" * 60)
@@ -127,6 +132,11 @@ if __name__ == "__main__":
         print(f"{n:6d} | {abs(t-2):14.4e} | {abs(s13-2):14.4e} | {abs(s38-2):14.4e}")
 
     # --- Order of accuracy ---
+    # TO TEST: Verify O(h⁴) by computing convergence order = log₂(error_old/error_new). Should be ~4.
+    # Parameters: f=exp(-x²), domain [0,1], exact=∫exp(-x²)dx, n=[4,8,16,32,64].
+    # Initial values: Each n is doubled; with O(h⁴), error should drop by factor 16 each time.
+    # Observe: Order column should show values ~4 as n gets large (asymptotic order).
+    # Try: f=cos(x), f=sqrt(1+x²), or f=tan(x) to verify 4th-order holds for various smooth functions.
     print("\n--- Order of accuracy verification ---")
     f = lambda x: np.exp(-x**2)
     exact = 0.7468241328124271  # ∫₀^1 exp(-x²) dx

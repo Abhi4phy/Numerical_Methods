@@ -111,11 +111,14 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Example 1: Scalar ---
+    # Newton's method requires: function f(x) and its derivative f'(x)
+    # TO TEST: Try different initial guesses or change to other functions
+    # Example: newton_raphson(f, fp, 0.5) or newton_raphson(f, fp, 2.0)
     print("\n--- f(x) = x³ - x - 2 ---")
     f = lambda x: x**3 - x - 2
     fp = lambda x: 3*x**2 - 1
     
-    root, info = newton_raphson(f, fp, 1.5)
+    root, info = newton_raphson(f, fp, 1.5)  # Try changing initial guess to 0.5, 2.0, etc.
     print(f"Root: {root:.15f}")
     print(f"f(root): {f(root):.2e}")
     print(f"Iterations: {info['iterations']}")
@@ -130,19 +133,23 @@ if __name__ == "__main__":
                   f"error_{k+1}/error_k² = {ratio:.4f}")
 
     # --- Example 2: Square root computation ---
+    # TO TEST: Change 1.0 to other starting points like 0.5, 2.0, or 3.0
+    # More initial guesses lead to quadratic convergence from different paths
     print("\n--- Computing √2 via x² - 2 = 0 ---")
     f_sqrt = lambda x: x**2 - 2
     fp_sqrt = lambda x: 2*x
-    root_sqrt, _ = newton_raphson(f_sqrt, fp_sqrt, 1.0)
+    root_sqrt, _ = newton_raphson(f_sqrt, fp_sqrt, 1.0)  # Experiment: try 0.5, 2.0, 3.0
     print(f"  Newton: {root_sqrt:.15f}")
     print(f"  Exact:  {np.sqrt(2):.15f}")
 
     # --- Example 3: System of equations ---
+    # Key: Must provide Jacobian matrix J (partial derivatives)
+    # TO TEST: Try different initial guesses [0.5, 0.3], [0.7, 0.7], or [-0.7, -0.7]
     print("\n--- System: x² + y² = 1, x - y = 0 (circle ∩ line) ---")
     F = lambda x: [x[0]**2 + x[1]**2 - 1, x[0] - x[1]]
     J = lambda x: [[2*x[0], 2*x[1]], [1, -1]]
     
-    root_sys, info_sys = newton_system(F, J, [0.5, 0.3])
+    root_sys, info_sys = newton_system(F, J, [0.5, 0.3])  # Change initial guess to [0.7, 0.7] or [-0.7, -0.7]
     print(f"  Root: ({root_sys[0]:.12f}, {root_sys[1]:.12f})")
     print(f"  Expected: ({1/np.sqrt(2):.12f}, {1/np.sqrt(2):.12f})")
     print(f"  Iterations: {info_sys['iterations']}")

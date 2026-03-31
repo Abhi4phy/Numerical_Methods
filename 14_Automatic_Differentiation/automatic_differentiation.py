@@ -481,6 +481,8 @@ if __name__ == "__main__":
     print("AUTOMATIC DIFFERENTIATION DEMO")
     print("=" * 60)
 
+    # TO TEST: Add/remove test functions and evaluate at multiple x0 values (including near singular domains for log/sqrt variants).
+    # Observe machine-precision agreement between AD and analytic derivatives.
     # --- 1. Forward Mode Basics ---
     print("\n--- Forward Mode (Dual Numbers) ---")
     
@@ -502,6 +504,8 @@ if __name__ == "__main__":
         err = abs(der - exact)
         print(f"  {name:15s} {der:12.8f} {exact:12.8f} {err:12.2e}")
 
+    # TO TEST: Change Rosenbrock start point x0_2d and compare reverse AD against finite-difference gradients.
+    # Observe finite-difference sensitivity versus robust reverse-mode gradients.
     # --- 2. Reverse Mode ---
     print("\n--- Reverse Mode (Computational Graph) ---")
     
@@ -532,6 +536,8 @@ if __name__ == "__main__":
     print(f"    Rev AD error:  {np.linalg.norm(grad_rev - grad_exact):.2e}")
     print(f"    Fin diff error:{np.linalg.norm(grad_fd - grad_exact):.2e}")
 
+    # TO TEST: Swap in alternative vector maps and input points (r, theta).
+    # Observe Jacobian entries against closed-form expectations for each mapping.
     # --- 3. Jacobian ---
     print("\n--- Jacobian (Forward Mode) ---")
     

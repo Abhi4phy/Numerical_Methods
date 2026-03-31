@@ -155,6 +155,11 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- 1D integral ---
+    # TO TEST: Verify convergence rate O(1/√N). Error should decrease by factor ~3.16 when N→10N.
+    # Parameters: f=sin(x), domain [0,π], exact=2, N=[100, 1000, 10000, 100000, 1000000].
+    # Initial values: Random seed=42 (reproducible) for RNG consistency.
+    # Observe: Both statistical error (σ/√N) and actual error vs exact value=2.
+    # Try: N=[10, 100, 1000] for faster run, or different f like exp(x) or 1/(1+x²).
     print("\n--- 1D: ∫₀^π sin(x) dx = 2 ---")
     for n in [100, 1000, 10000, 100000, 1000000]:
         est, err = monte_carlo_1d(np.sin, 0, np.pi, n)
@@ -162,6 +167,11 @@ if __name__ == "__main__":
               f"actual_err={abs(est-2):.6f}")
 
     # --- High-dimensional integral ---
+    # TO TEST: Compute volumes/integrals in high dimensions where grid methods fail. Try 4D, 8D, 10D.
+    # Parameters: Indicator function in_Nball(x) (1 if |x|≤1, else 0), dimension=6, n_samples=500000.
+    # Initial values: 6D unit ball with exact volume V₆=π³/6≈5.1677, bounds=[-1,1]^6.
+    # Observe: Estimate ± error vs exact. Even with 0.5M samples, error may be ~0.1 (curse of dimensionality).
+    # Try: Reduce n_samples to 50K to see larger error, or increase to 2M for tighter estimate.
     print("\n--- 6D: Volume of unit 6-ball (exact = π³/6 ≈ 5.1677) ---")
     exact_6ball = np.pi**3 / 6
     
@@ -175,6 +185,11 @@ if __name__ == "__main__":
     print(f"  Error:    {abs(est - exact_6ball):.4f}")
 
     # --- Importance sampling ---
+    # TO TEST: Compare importance sampling vs naive MC. Importance should have much smaller variance.
+    # Parameters: f=x²exp(-x) (unbounded but integrable), use exponential dist (1-exp(-x)) as proposal.
+    # Initial values: Exponential proposal g(x)=exp(-x), n_samples=100000, exact integral=2.
+    # Observe: Importance sampling error should be much smaller than naive MC on [0,20].
+    # Insight: Proposal g should match shape of |f|. Try other integrals: ∫x⁴exp(-x), ∫sqrt(x)exp(-x).
     print("\n--- Importance Sampling: ∫₀^∞ x² e^{-x} dx = 2 ---")
     # Use exponential distribution as importance distribution
     f_is = lambda x: x**2 * np.exp(-x)

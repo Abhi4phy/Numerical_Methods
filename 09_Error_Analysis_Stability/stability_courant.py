@@ -184,6 +184,8 @@ if __name__ == "__main__":
     print("STABILITY ANALYSIS & CFL CONDITION")
     print("=" * 60)
 
+    # TO TEST: Sweep Courant number C and kh resolution; compare FTCS, upwind, and Lax-Friedrichs amplification factors.
+    # Observe max |G| crossing above 1 as the indicator of instability.
     # --- Von Neumann analysis ---
     print("\n--- Von Neumann Stability Analysis ---")
     k_h = np.linspace(0, np.pi, 200)
@@ -196,6 +198,8 @@ if __name__ == "__main__":
         print(f"  C = {C}: FTCS={g_ftcs:.4f}, Upwind={g_upwind:.4f}, "
               f"Lax-Friedrichs={g_lf:.4f}")
 
+    # TO TEST: Change scheme, C, grid size N, and n_steps in advection_demo.
+    # Observe blow-up/oscillation for unstable settings versus numerical diffusion for stable low-order schemes.
     # --- Advection demonstrations ---
     print("\n--- Advection Equation: u_t + u_x = 0 ---")
     
@@ -206,6 +210,8 @@ if __name__ == "__main__":
             status = "STABLE" if max_val < 2 else "UNSTABLE"
             print(f"  {scheme:16s} C={C}: max|u|={max_val:.2e}  [{status}]")
 
+    # TO TEST: Vary r around 0.5 and increase n_steps to expose long-time instability thresholds.
+    # Observe stable decay for r<=0.5 and growth/blow-up for r>0.5.
     # --- Diffusion stability ---
     print("\n--- Diffusion: u_t = D u_xx (FTCS) ---")
     for r in [0.3, 0.5, 0.51, 0.6, 1.0]:
@@ -214,6 +220,8 @@ if __name__ == "__main__":
         status = "STABLE" if stable and max_u < 10 else "UNSTABLE"
         print(f"  r = {r:.2f}: max|u| = {max_u:.2e}  [{status}]")
 
+    # TO TEST: Modify wave speed a, dx, and dt to evaluate different Courant numbers.
+    # Observe direct transition of reported status at C=1 boundary.
     # --- CFL check ---
     print("\n--- CFL Condition Check ---")
     dx = 0.01

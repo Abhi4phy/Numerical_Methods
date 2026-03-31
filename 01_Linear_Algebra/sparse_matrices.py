@@ -346,7 +346,11 @@ if __name__ == "__main__":
     print("SPARSE MATRIX METHODS DEMO")
     print("=" * 60)
 
-    # --- 1D Poisson ---
+    # --- Example 1: 1D Poisson ---
+    # Demonstrates sparse storage and efficient solver for a tridiagonal system
+    # TO TEST: Change N (100 to 50, 200, 500) to see scaling effects,
+    # modify tolerance (1e-12 to 1e-8, 1e-15), or try different initial guesses x0
+    # Observe CG convergence rate and sparse matrix efficiency
     print("\n--- 1D Poisson (N=100) ---")
     N = 100
     A_csr = sparse_poisson_1d(N)
@@ -364,7 +368,11 @@ if __name__ == "__main__":
     err = np.max(np.abs(x_sol - u_exact))
     print(f"CG converged in {len(residuals)} iters, max error = {err:.6e}")
 
-    # --- 2D Poisson ---
+    # --- Example 2: 2D Poisson ---
+    # Shows 2D discretization with 5-point stencil, much sparser than 1D
+    # TO TEST: Change grid size (20x20 to 10x10, 30x30), modify RHS to different functions,
+    # adjust tolerance, or try using direct solve with sparse LU for comparison
+    # Observe memory and time scaling with grid refinement
     print("\n--- 2D Poisson (20×20 grid) ---")
     Nx = 20
     A_2d = sparse_poisson_2d(Nx)
@@ -405,7 +413,12 @@ if __name__ == "__main__":
         print(f"  N={N:5d}: sparse={t_sparse*1e6:.0f}μs, dense={t_dense*1e6:.0f}μs, "
               f"nnz%={sparsity:.1f}%")
 
-    # --- RCM reordering ---
+    # --- Example 3: Timing and RCM reordering ---
+    # Compares sparse vs dense performance and bandwidth reduction techniques
+    # TO TEST: Change loop iterations (100 to 1000), modify test sizes N list,
+    # test different sparse matrix structures (assemble custom patterns),
+    # or implement other reordering algorithms for comparison
+    # Observe how sparsity percentage and matrix size affect relative speedup
     print("\n--- Reverse Cuthill-McKee bandwidth reduction ---")
     N = 50
     A_sp = sparse_poisson_1d(N)

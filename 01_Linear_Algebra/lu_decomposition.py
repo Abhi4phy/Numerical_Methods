@@ -119,6 +119,8 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # Example: solve a 4x4 system
+    # TO TEST: Try different matrix sizes with np.random.rand(n,n) or use ill-conditioned matrices
+    # Example: A = np.random.rand(6, 6); b = np.random.rand(6)
     A = np.array([
         [2,  1,  1,  0],
         [4,  3,  3,  1],
@@ -133,7 +135,8 @@ if __name__ == "__main__":
     print("\nVector b:", b)
 
     # Without pivoting
-    L, U = lu_decomposition(A)
+    # TO TEST: See which decomposition is more stable for your matrix
+    L, U = lu_decomposition(A)  # No pivoting - can be numerically unstable
     print("\n--- LU (no pivoting) ---")
     print("L:\n", L)
     print("U:\n", U)

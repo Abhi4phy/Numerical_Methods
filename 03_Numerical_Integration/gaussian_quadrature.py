@@ -124,8 +124,10 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- Exactness for polynomials ---
+    # TO TEST: Try higher degree polynomials (k up to 10 or more) with different n
+    # Gauss-n quadrature is exact for polynomials up to degree 2n-1
     print("\n--- Exactness test: ∫₋₁¹ x^k dx ---")
-    for k in range(8):
+    for k in range(8):  # Change range to test higher degrees
         f = lambda x, k=k: x**k
         exact = (1 - (-1)**(k+1)) / (k + 1)
         for n in [2, 3, 4]:
@@ -139,6 +141,8 @@ if __name__ == "__main__":
         print()
 
     # --- Comparison with Simpson's ---
+    # TO TEST: Try different integrands (exp, cos, 1/(1+x²)) and intervals
+    # Example: np.exp, np.cos, lambda x: 1/(1+x**2)
     print("\n--- Accuracy comparison: ∫₀^π sin(x) dx = 2 ---")
     from simpsons_rule import simpsons_rule
     

@@ -269,6 +269,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # --- 1. Exponential function ---
+    # TO TEST: Modify n (Taylor term count), Padé order [M/N], and x_test range; observe where Padé outperforms truncated Taylor, especially at larger x.
     print("\n--- exp(x): Taylor vs Padé ---")
     n = 7  # Use 7 Taylor coefficients
     c_exp = taylor_coefficients('exp', n)
@@ -289,6 +290,7 @@ if __name__ == "__main__":
               f"{abs(tay-ex):12.4e} {abs(pad-ex):12.4e}")
 
     # --- 2. 1/(1-x): Beyond radius of convergence ---
+    # TO TEST: Vary x_test2 values across |x|<1 and |x|>=1 and try different [M/N] orders; observe Taylor divergence and Padé behavior near the pole x=1.
     print("\n--- 1/(1-x): Padé extends beyond |x| < 1 ---")
     c_geom = taylor_coefficients('1/(1-x)', 11)
     
@@ -307,6 +309,7 @@ if __name__ == "__main__":
         print(f"{x:5.1f} {ex:10.4f} {tay:10.4f} {pad:12.4f} {divg:>12}")
 
     # --- 3. Padé finds poles ---
+    # TO TEST: Change approximation order (e.g., [3/3], [4/4], [5/5]) and tolerance for real poles; observe estimated pole locations and numerical stability of root finding.
     print("\n--- Pole detection in Padé ---")
     c_geom = taylor_coefficients('1/(1-x)', 9)
     p44, q44 = pade_approximant(c_geom, 4, 4)

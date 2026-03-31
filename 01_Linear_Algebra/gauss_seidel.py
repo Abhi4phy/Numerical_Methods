@@ -125,8 +125,10 @@ if __name__ == "__main__":
     print(f"Direct:   {np.round(np.linalg.solve(A, b), 6)}")
 
     # SOR with different ω
+    # TO TEST: Try different relaxation parameters: [0.5, 0.9, 1.1, 1.8]
+    # Different values affect convergence speed significantly!
     print()
-    for omega in [0.8, 1.0, 1.2, 1.5]:
+    for omega in [0.8, 1.0, 1.2, 1.5]:  # Change these values to experiment
         x_sor, hist_sor = sor(A, b, omega=omega)
 
     # Convergence comparison
