@@ -1,6 +1,6 @@
 # Numerical Methods for Physics
 
-A comprehensive collection of **57 numerical methods** commonly used in computational physics and applied mathematics. Each method is implemented in a self-contained Python file with detailed theory, "Where to Start" guidance, working implementations, and demonstrations.
+A comprehensive collection of **58 numerical methods** commonly used in computational physics and applied mathematics. Each method is implemented in a self-contained Python file with detailed theory, "Where to Start" guidance, working implementations, and demonstrations.
 
 ---
 

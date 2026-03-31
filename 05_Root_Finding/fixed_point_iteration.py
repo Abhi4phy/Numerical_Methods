@@ -44,17 +44,35 @@ def fixed_point_iteration(g, x0, tol=1e-12, max_iter=1000):
     history = [x]
     
     for k in range(max_iter):
-        x_new = g(x)
-        history.append(x_new)
-        
-        if abs(x_new - x) < tol:
-            return x_new, {
+        try:
+            x_new = g(x)
+            
+            # Check for divergence (value too large)
+            if abs(x_new) > 1e10:
+                return x, {
+                    'iterations': k + 1,
+                    'history': history,
+                    'converged': False,
+                    'error': 'Divergence detected: |x| > 1e10'
+                }
+            
+            history.append(x_new)
+            
+            if abs(x_new - x) < tol:
+                return x_new, {
+                    'iterations': k + 1,
+                    'history': history,
+                    'converged': True
+                }
+            
+            x = x_new
+        except (OverflowError, ValueError) as e:
+            return x, {
                 'iterations': k + 1,
                 'history': history,
-                'converged': True
+                'converged': False,
+                'error': f'Numerical error: {type(e).__name__}'
             }
-        
-        x = x_new
     
     return x, {'iterations': max_iter, 'history': history, 'converged': False}
 
@@ -132,9 +150,13 @@ if __name__ == "__main__":
     # Formulation B: x = x³ - 2 (diverges!)
     gB = lambda x: x**3 - 2
     rB, iB = fixed_point_iteration(gB, 1.5, max_iter=20)
-    gpB, cB = check_convergence_condition(gB, rA)  # Check at known root
-    print(f"  g(x) = x³ - 2:      converged = {iB['converged']}, "
-          f"|g'| = {gpB:.4f} (diverges because |g'| > 1)")
+    if iB['converged']:
+        gpB, cB = check_convergence_condition(gB, rB)
+        print(f"  g(x) = x³ - 2:      root = {rB:.12f}, iters = {iB['iterations']}, "
+              f"|g'| = {gpB:.4f}")
+    else:
+        error_msg = iB.get('error', 'Did not converge')
+        print(f"  g(x) = x³ - 2:      {error_msg}, iters = {iB['iterations']}")
 
     # --- Aitken acceleration ---
     print("\n--- Aitken Acceleration ---")

@@ -48,3 +48,27 @@ SCRIPT_TIMEOUT = 120        # seconds
 LATEX_DPI      = 110        # rendered equation resolution
 LATEX_FIG_W    = 8          # figure width (inches)
 LATEX_FIG_H    = 0.5        # figure height (inches)
+
+# ────────────────────────────────────────────────────────
+# Learning & Educational Settings
+# ────────────────────────────────────────────────────────
+LEARNING_LEVELS = {
+    "beginner": {
+        "label": "🌱 Beginner",
+        "description": "First-time learners — basic concepts only",
+        "show_sections": ["title", "why", "concept", "simple_example"],
+    },
+    "intermediate": {
+        "label": "📈 Intermediate", 
+        "description": "Learners familiar with basics — deeper understanding",
+        "show_sections": ["title", "why", "concept", "simple_example", "theory", "math_equations", "applications", "complexity"],
+    },
+    "advanced": {
+        "label": "🎓 Advanced",
+        "description": "Researchers & experts — all details including pitfalls & alternatives",
+        "show_sections": ["all"],
+    },
+}
+
+DEFAULT_LEARNING_LEVEL = "intermediate"   # Default view level for all users
+

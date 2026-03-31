@@ -15,6 +15,8 @@ Equations are rendered by the GUI via matplotlib's TeX engine.
 Verification status: 98 equations across 58 methods — ALL VERIFIED ✓
 """
 
+import re
+
 # ============================================================
 # Complete Equations Database  (58 methods, ~98 equations)
 # ============================================================
@@ -566,6 +568,229 @@ EQUATIONS = {
 
 
 # ============================================================
+# Method Metadata — learning resources, prerequisites, etc.
+# ============================================================
+# Metadata structure: {filename: {
+#   "prerequisites": [...],      # Methods to learn first
+#   "complexity": "O(...)",       # Time/space Big-O  
+#   "applications": [...],       # Real-world use cases
+#   "pitfalls": [...],           # When/why it fails
+#   "related_methods": [...],    # Similar approaches
+#   "difficulty": "beginner|intermediate|advanced",
+#   "learn_level": {...}         # Content by learning level
+# }}
+
+METHOD_METADATA = {
+
+    # ── Root Finding (Foundations) ─────────────────────────
+    
+    "bisection_method.py": {
+        "difficulty": "beginner",
+        "prerequisites": ["None - start here!"],
+        "complexity": "Time: O(log((b-a)/ε)) | Space: O(1)",
+        "applications": [
+            "Finding zeros of any continuous function",
+            "Root isolation in engineering problems",
+            "Safety-critical systems (always converges)"
+        ],
+        "pitfalls": [
+            "Requires sign change at endpoints f(a)·f(b) < 0",
+            "Slow convergence (~1 bit/iteration)",
+            "Cannot find roots with even multiplicity"
+        ],
+        "related_methods": ["newton_raphson.py", "secant_method.py", "fixed_point_iteration.py"],
+    },
+
+    "newton_raphson.py": {
+        "difficulty": "beginner",
+        "prerequisites": ["bisection_method.py", "calculus basics"],
+        "complexity": "Time: ~4-6 iterations (quadratic) | Space: O(1) per dimension",
+        "applications": [
+            "Fast root finding in numerical simulations",
+            "Nonlinear equation solving in physics",
+            "Optimization (minimize by finding ∇f = 0)",
+            "Multidimensional root finding"
+        ],
+        "pitfalls": [
+            "Requires derivative f'(x) - not always available",
+            "May diverge if initial guess is poor",
+            "Fails at multiple roots (multiplicity > 1)",
+            "Very sensitive to starting point in some problems"
+        ],
+        "related_methods": ["bisection_method.py", "secant_method.py", "gradient_descent.py"],
+    },
+
+    # ── Linear Algebra (Core) ──────────────────────────────
+
+    "lu_decomposition.py": {
+        "difficulty": "beginner",
+        "prerequisites": ["Gaussian elimination (high school algebra)"],
+        "complexity": "Time: O(2n³/3) | Space: O(n²)",
+        "applications": [
+            "Solving Ax = b systems (most common numerically)",
+            "Determinant computation",
+            "Matrix inversion",
+            "Foundation for advanced linear solvers"
+        ],
+        "pitfalls": [
+            "Unstable without pivoting (partial/full)",
+            "Dense matrices only (use sparse methods for large systems)",
+            "Singular matrices cause division by zero",
+            "Accumulates roundoff errors for ill-conditioned A"
+        ],
+        "related_methods": ["qr_decomposition.py", "cholesky_decomposition.py", "gaussian_elimination"],
+    },
+
+    "eigenvalue_eigenvector.py": {
+        "difficulty": "beginner",
+        "prerequisites": ["lu_decomposition.py", "linear algebra basics"],
+        "complexity": "Time: O(n³) iterative | Space: O(n²)",
+        "applications": [
+            "Quantum mechanics (energy levels are eigenvalues)",
+            "Stability analysis of dynamical systems",
+            "Principal component analysis (PCA)",
+            "Natural frequencies in vibrating systems",
+            "Google PageRank algorithm"
+        ],
+        "pitfalls": [
+            "Complex eigenvalues for non-symmetric matrices",
+            "Multiplicity causes numerical illconditioning",
+            "Power iteration only finds largest eigenvalue",
+            "Convergence slow for clustered eigenvalues"
+        ],
+        "related_methods": ["lu_decomposition.py", "qr_decomposition.py", "svd.py"],
+    },
+
+    "conjugate_gradient.py": {
+        "difficulty": "intermediate",
+        "prerequisites": ["lu_decomposition.py", "eigenvalue_eigenvector.py", "linear algebra"],
+        "complexity": "Time: O(κ(A)·n) for symmetric positive definite A | Space: O(n)",
+        "applications": [
+            "Large sparse symmetric linear systems",
+            "Solving Ax = b without storing A explicitly",
+            "Machine learning (convex optimization)",
+            "Finite element methods (FEM)",
+            "Preconditioning strategy for other solvers"
+        ],
+        "pitfalls": [
+            "Only for symmetric positive definite matrices",
+            "Convergence depends strongly on condition number κ(A)",
+            "Roundoff errors can destroy A-orthogonality",
+            "Requires matrix-vector product A·v (often expensive)"
+        ],
+        "related_methods": ["lu_decomposition.py", "jacobi_iterative.py", "gauss_seidel.py", "krylov_methods.py"],
+    },
+
+    # ── Differential Equations (Heart of Physics) ──────────
+
+    "euler_method.py": {
+        "difficulty": "beginner",
+        "prerequisites": ["calculus (derivatives & initial value problems)"],
+        "complexity": "Time: O(n/h) | Space: O(1)",
+        "applications": [
+            "Simplest ODE solver - best for learning",
+            "Real-time physics simulations",
+            "Particle systems, molecular dynamics",
+            "Climate modeling",
+            "Chemical kinetics"
+        ],
+        "pitfalls": [
+            "Local error O(h²), global error O(h) - very inaccurate",
+            "Unstable for stiff problems or large h",
+            "Doesn't conserve energy (important for long-term stability)",
+            "Accumulates error quadratically in time"
+        ],
+        "related_methods": ["runge_kutta_rk4.py", "adaptive_step_size.py", "symplectic_integrators.py"],
+    },
+
+    "runge_kutta_rk4.py": {
+        "difficulty": "beginner",
+        "prerequisites": ["euler_method.py", "calculus"],
+        "complexity": "Time: O(n/h) with 4 stages | Space: O(1)",
+        "applications": [
+            "Workhorse ODE solver for smooth problems",
+            "Astrophysics (orbital mechanics)",
+            "Circuit simulations",
+            "Biomolecular dynamics",
+            "Game physics engines"
+        ],
+        "pitfalls": [
+            "Fixed step size (wastes evaluations on smooth parts)",
+            "Still not energy-conserving (use symplectic for long runs)",
+            "Stiff problems need implicit methods (implicit RK)",
+            "Unstable if step size too large relative to timescale"
+        ],
+        "related_methods": ["euler_method.py", "adaptive_step_size.py", "symplectic_integrators.py"],
+    },
+
+    "finite_difference_method.py": {
+        "difficulty": "intermediate",
+        "prerequisites": ["taylor_series", "partial derivatives"],
+        "complexity": "Time: O(n) or O(n²) depending on space-time grid | Space: O(n) or O(n²)",
+        "applications": [
+            "PDEs: heat equation, wave equation, Schrödinger",
+            "Climate & weather modeling",
+            "Geology (seismic wave propagation)",
+            "Electromagnetics",
+            "Simple alternative to FEM"
+        ],
+        "pitfalls": [
+            "Requires tuning grid size (h) carefully",
+            "Boundary conditions often tricky",
+            "Violates conservation laws unless carefully designed",
+            "Can become unstable (check CFL condition)",
+            "Accuracy degrades at discontinuities"
+        ],
+        "related_methods": ["finite_element_method.py", "finite_volume_method.py", "spectral_methods.py"],
+    },
+
+    # ── Numerical Integration (Quadrature) ──────────────────
+
+    "gaussian_quadrature.py": {
+        "difficulty": "intermediate",
+        "prerequisites": ["trapezoidal_rule.py", "orthogonal polynomials"],
+        "complexity": "Time: O(n) nodes | Space: O(n)",
+        "applications": [
+            "High-precision integration (exponential convergence)",
+            "Finite element method (automatic assembly)",
+            "Bayesian inference (quadrature rules)",
+            "Physics simulations requiring high accuracy",
+            "Spectral methods"
+        ],
+        "pitfalls": [
+            "Fixed nodes - can't easily add more accuracy",
+            "Assumes smooth integrands (fails at singularities)",
+            "Nodes are irrational (tabulat from references)",
+            "Requires weight table lookup"
+        ],
+        "related_methods": ["trapezoidal_rule.py", "simpsons_rule.py", "monte_carlo_integration.py"],
+    },
+
+    # ── Optimization (Applied everywhere) ────────────────
+
+    "gradient_descent.py": {
+        "difficulty": "beginner",
+        "prerequisites": ["calculus (gradients)"],
+        "complexity": "Time: O(k/ε) iterations | Space: O(n) for gradient",
+        "applications": [
+            "Machine learning (most common optimization)",
+            "Neural network training",
+            "Minimizing least-squares error",
+            "Parameter estimation in science",
+            "Resource allocation problems"
+        ],
+        "pitfalls": [
+            "Slow convergence (linear rate, not quadratic)",
+            "Step size α requires tuning (too small=slow, too large=diverge)",
+            "Gets stuck in local minima (non-convex problems)",
+            "Sensitive to scaling of variables"
+        ],
+        "related_methods": ["newton_raphson.py", "conjugate_gradient_optimization.py", "linear_programming.py"],
+    },
+}
+
+
+# ============================================================
 # Unicode math-line detector
 # ============================================================
 
@@ -640,11 +865,32 @@ def is_math_line(line):
     s = line.strip()
     if not s or len(s) < 3:
         return False
+
+    # Common explicit math patterns seen in docstrings.
+    if re.search(r"\b(dy/dt|dX|d/dx|\bAx\s*=\s*b\b|\bA\s*=\s*[A-Za-z]|\bO\(|\bexp\(|x_\{n\+1\}|\bnabla|\bpsi\(|\bpsi)\b", s):
+        return True
+
+    # High-confidence equation line with assignment/operator.
+    if re.search(r"[A-Za-z\u03b1-\u03c9\u0391-\u03a9\u03c8\u03d5]\s*=", s):
+        if re.search(r"[+\-*/^()_\u03a3\u03c0\u03a9\u0394\u210f]", s):
+            return True
+    if '=' in s and re.search(r"[\u03b1-\u03c9\u0391-\u03a9\u03c8\u03d5\u0394\u210f]", s):
+        return True
+
+    # Skip prose-like starters for weaker heuristics below.
     if s.startswith(_SKIP_PREFIXES):
         return False
+
     n_math = sum(1 for c in s if c in _MATH_CHARS)
     if n_math >= 2:
         return True
     if n_math == 1 and ('=' in s or '\u2192' in s):
         return True
+
+    # ASCII-style equation fallback: variable-rich line with '=' and operators.
+    if '=' in s and re.search(r"[+\-*/^()]", s):
+        alpha_tokens = re.findall(r"[A-Za-z_][A-Za-z0-9_]*", s)
+        if len(alpha_tokens) >= 2 and len(s.split()) <= 18:
+            return True
+
     return False
