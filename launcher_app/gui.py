@@ -781,9 +781,16 @@ def gui_launcher():
         if not original_code[0]:
             messagebox.showinfo("No code", "No modification to reset.")
             return
+        if _highlight_job[0] is not None:
+            try:
+                root.after_cancel(_highlight_job[0])
+            except Exception:
+                pass
+            _highlight_job[0] = None
         code_text.configure(state="normal")
         code_text.delete("1.0", "end")
         code_text.insert("1.0", original_code[0])
+        _apply_syntax_highlighting(original_code[0])
         code_text.configure(state="normal")
         messagebox.showinfo("Reset", "Code reset to original version.")
 
